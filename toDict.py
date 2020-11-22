@@ -1,6 +1,18 @@
 from sys import argv,stdin
 from statistics import median, mean
 import pprint
+"""Vim tool for transforming key value pair text to python dictionary / json format.
+    Does not work on nested structures. Takes in stdin and prints out a pretty printed python dictionary.
+    Supports the delimiters defined in the detect_input_delimiters function.
+
+    Usage
+    Select the key value pair text in vim either with visual or the entire file and feed it to this script. The script will then return the string formatted as a dictionary stirng.
+
+    Sample input
+    key1,value1
+    key2,value2
+    key3,value3
+"""
 pp = pprint.PrettyPrinter(indent=4)
 
 def input_to_list(ip):
@@ -38,7 +50,8 @@ def detect_input_delimiter(lines):
     for d, count in delimiters.items():
         avcount[d] = count / len(lines)
         
-    # Criteria for selecting delimiter is that count per line should be closest to 1 and distance from middle close to 0
+    # Criteria for selecting delimiter is that count per line should be closest to 1
+    # Option to use delimiter closest to middle of line implemented, but currently not used as count closest to 1 probably is sufficient for 99% of the cases.
     delim_closest_to_middle = min(avposdist, key=avposdist.get)   
     delim_closest_to_one = min(avcount.items(), key=lambda x: abs(1 - x[1]))[0]
 
