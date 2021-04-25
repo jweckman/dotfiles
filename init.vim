@@ -44,7 +44,7 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 " Telescope configs
-nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', --max-filesize 100M, '-g', '!*.{xls,xlsx,pdf,rbql}'} }<CR>
+nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql}'} }<CR>
 
 " LSP Configs
 lua << EOF
