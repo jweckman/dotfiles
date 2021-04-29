@@ -33,6 +33,7 @@ endif
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
     Plug 'mechatroner/rainbow_csv'
+    Plug 'ap/vim-buftabline'
     " Telescope
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
