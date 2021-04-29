@@ -21,6 +21,9 @@ set nofoldenable
 set foldlevel=2
 let mapleader=","
 nnoremap gv <c-v>
+set hidden
+nnoremap <C-J> :bnext<CR>
+nnoremap <C-K> :bprev<CR>
 map <F7> gg=G<C-o><C-o>
 
 
