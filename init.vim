@@ -53,6 +53,7 @@ nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command =
 " LSP Configs
 lua << EOF
 require'lspconfig'.pyright.setup{}
+require'lspconfig'.texlab.setup{}
 
 require'compe'.setup {
   enabled = true;
