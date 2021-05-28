@@ -328,9 +328,36 @@
     <action name="Execute">
       <startupnotify>
         <enabled>true</enabled>
-        <name>Lxqt runner</name>
+        <name>Rofi</name>
       </startupnotify>
-      <command>lxqt-runner</command>
+      <command>rofi -show run</command>
+    </action>
+  </keybind>
+  <keybind key="C-A-t">
+    <action name="Execute">
+      <startupnotify>
+        <enabled>true</enabled>
+        <name>Alacritty</name>
+      </startupnotify>
+      <command>Alacritty</command>
+    </action>
+  </keybind>
+  <keybind key="C-A-r">
+    <action name="Execute">
+      <startupnotify>
+        <enabled>true</enabled>
+        <name>Firefox</name>
+      </startupnotify>
+      <command>firefox</command>
+    </action>
+  </keybind>
+  <keybind key="C-A-y">
+    <action name="Execute">
+      <startupnotify>
+        <enabled>true</enabled>
+        <name>Chromium</name>
+      </startupnotify>
+      <command>chromium-browser</command>
     </action>
   </keybind>
 </keyboard>
@@ -670,10 +697,10 @@
 
 <applications>
 <application class="Firefox" name="Navigator">
-    <fullscreen>yes</fullscreen>
+    <maximized>yes</maximized>
 </application>
 <application class="Alacritty" name="Alacritty">
-    <fullscreen>yes</fullscreen>
+    <maximized>yes</maximized>
 </application>
 <!--
   # this is an example with comments through out. use these to make your
