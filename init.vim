@@ -45,6 +45,7 @@ call plug#begin('~/.vim/plugged')
     " LSP
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/nvim-compe'
+    Plug 'simrat39/rust-tools.nvim'
 call plug#end()
 
 " Telescope configs
@@ -54,6 +55,7 @@ nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command =
 lua << EOF
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.texlab.setup{}
+require'lspconfig'.rust_analyzer.setup{}
 
 require'compe'.setup {
   enabled = true;
