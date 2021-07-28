@@ -22,17 +22,19 @@ set foldlevel=2
 let mapleader=","
 nnoremap gv <c-v>
 set hidden
-nnoremap <C-J> :bnext<CR>
-nnoremap <C-K> :bprev<CR>
+nnoremap <C-L> :bnext<CR>
+nnoremap <C-H> :bprev<CR>
 map <F7> gg=G<C-o><C-o>
 
 
-" Install Plug if isn't already
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+" auto-install vim-plug
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
+
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
     Plug 'mechatroner/rainbow_csv'
