@@ -15,7 +15,9 @@ source $ZSH/oh-my-zsh.sh
 set -o vi
 bindkey '   ' autosuggest-accept
 bindkey '^ ' autosuggest-execute
+bindkey -r '^J'
 export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$(yarn global bin):$PATH"
 # Speeds up key repeats using xset tool, needs to be installed separately
 xset r rate 200 30
 #bindkey -m vi-insert "\C-l":clear-screen
