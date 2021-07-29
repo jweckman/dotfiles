@@ -48,12 +48,13 @@ call plug#begin('~/.vim/plugged')
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/nvim-compe'
     Plug 'simrat39/rust-tools.nvim'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " Telescope configs
 nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql}'} }<CR>
 
-" LSP Configs
+" LSP and Treesitter configs
 lua << EOF
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.texlab.setup{}
@@ -94,4 +95,24 @@ require'lspconfig'.jsonls.setup {
 }
 
 vim.o.completeopt = "menuone,noselect"
+
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    disable = {},
+  },
+  indent = {
+    enable = false,
+    disable = {},
+  },
+  ensure_installed = {
+    "python",
+    "rust",
+    "json",
+    "yaml",
+    "html",
+  },
+}local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+parser_config.tsx.used_by = { "javascript", "typescript.tsx" }
+
 EOF
