@@ -9,7 +9,10 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 # USERCONFIG
 
-. $HOME/.asdf/asdf.sh
+# ASDF version manager
+source $HOME/.asdf/asdf.sh
+# Rust language
+source $HOME/.cargo/env
 
 # General
 set -o vi
@@ -50,3 +53,6 @@ function open () {
 fpath=(${ASDF_DIR}/completions $fpath)
 # initialise completions with ZSH's compinit
 autoload -Uz compinit && compinit
+
+# Swap esc and capslock
+setxkbmap -option caps:swapescape
