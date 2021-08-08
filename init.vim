@@ -42,12 +42,14 @@ call plug#begin('~/.vim/plugged')
     Plug 'mechatroner/rainbow_csv'
     Plug 'ap/vim-buftabline'
     Plug 'vimwiki/vimwiki'
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     " Telescope
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzy-native.nvim'
+    " Treesitter
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'nvim-treesitter/playground'
     " LSP
     Plug 'neovim/nvim-lspconfig'
     Plug 'hrsh7th/nvim-compe'
