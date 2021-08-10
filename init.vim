@@ -24,6 +24,7 @@ nnoremap gv <c-v>
 set hidden
 nnoremap <C-L> :bnext<CR>
 nnoremap <C-H> :bprev<CR>
+nnoremap <leader>rm :call delete(expand('%')) \| bdelete!<CR>
 " Try to prettify the builtin way using F7
 map <F7> gg=G<C-o><C-o>
 
