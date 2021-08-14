@@ -14,7 +14,7 @@ set incsearch
 set ignorecase
 set updatetime=300
 set shortmess+=c
-set foldmethod=syntax
+"set foldmethod=syntax
 set lazyredraw
 set foldnestmax=10
 set nofoldenable
@@ -24,10 +24,38 @@ nnoremap gv <c-v>
 set hidden
 nnoremap <C-L> :bnext<CR>
 nnoremap <C-H> :bprev<CR>
-nnoremap <leader>rm :call delete(expand('%')) \| bdelete!<CR>
-" Try to prettify the builtin way using F7
-map <F7> gg=G<C-o><C-o>
+" Try to prettify the builtin way
+map <leader>pp gg=G<C-o><C-o>
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 
+" Line diff configs. Allows for comparing the @a and @b register contents
+noremap <leader>ldt :Linediff<CR>
+noremap <leader>ldo :LinediffReset<CR>
+
+let g:diffed_buffers = []
+
+function DiffText(a, b, diffed_buffers)
+    enew
+    setlocal buftype=nowrite
+    call add(a:diffed_buffers, bufnr('%'))
+    call setline(1, split(a:a, "\n"))
+    diffthis
+    vnew
+    setlocal buftype=nowrite
+    call add(a:diffed_buffers, bufnr('%'))
+    call setline(1, split(a:b, "\n"))
+    diffthis
+endfunction
+
+function WipeOutDiffs(diffed_buffers)
+    for buffer in a:diffed_buffers
+        execute 'bwipeout! ' . buffer
+    endfor
+endfunction
+
+nnoremap <leader>ldr :call DiffText(@a, @b, g:diffed_buffers)<CR>
+"nnoremap <leader>ldrr :call WipeOutDiffs(g:diffed_buffers) | let g:diffed_buffers=[]<CR>
 
 " auto-install vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -43,6 +71,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'mechatroner/rainbow_csv'
     Plug 'ap/vim-buftabline'
     Plug 'vimwiki/vimwiki'
+    Plug 'AndrewRadev/linediff.vim'
     " Telescope
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
@@ -63,7 +92,11 @@ let g:vimwiki_list = [{'path': '/rpi2tb/joakim/documents/wiki', 'syntax': 'markd
 au FileType vimwiki setlocal shiftwidth=6 tabstop=6 noexpandtab
 
 " Telescope configs
-nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql}'} }<CR>
+:lua require'finders'
+nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR>
+nnoremap <leader>f14 :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po,git}', '/home/joakim/code/test/odoo/'} }<CR>
+nnoremap <leader>fg :lua require('telescope.builtin').live_grep{}<CR>
+nnoremap <leader>fg14 :lua require('telescope.builtin').live_grep{ search_dirs = {'/home/joakim/code/test/odoo/odoo', '/home/joakim/code/test/odoo/addons','/home/joakim/code/test/odoo/sprintit_accounting_super' }}CR>
 
 " LSP and Treesitter configs
 lua << EOF
