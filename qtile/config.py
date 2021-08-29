@@ -40,6 +40,7 @@ mod = "mod4"
 mod1 = "alt"
 mod2 = "control"
 home = os.path.expanduser('~')
+my_term = "alacritty"
 
 
 @lazy.function
@@ -166,8 +167,8 @@ group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0",]
 # FOR AZERTY KEYBOARDS
 #group_names = ["ampersand", "eacute", "quotedbl", "apostrophe", "parenleft", "section", "egrave", "exclam", "ccedilla", "agrave",]
 
-#group_labels = ["1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "0",]
-group_labels = ["", "", "", "", "", "", "", "", "", "",]
+group_labels = ["1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 ", "8 ", "9 ", "0",]
+#group_labels = ["", "", "", "", "", "", "", "", "", "",]
 #group_labels = ["Web", "Edit/chat", "Image", "Gimp", "Meld", "Video", "Vb", "Files", "Mail", "Music",]
 
 group_layouts = ["monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall",]
@@ -209,8 +210,8 @@ layout_theme = init_layout_theme()
 
 
 layouts = [
-    layout.MonadTall(margin=8, border_width=2, border_focus="#5e81ac", border_normal="#4c566a"),
-    layout.MonadWide(margin=8, border_width=2, border_focus="#5e81ac", border_normal="#4c566a"),
+    layout.MonadTall(margin=3, border_width=2, border_focus="#5e81ac", border_normal="#4c566a"),
+    layout.MonadWide(margin=3, border_width=2, border_focus="#5e81ac", border_normal="#4c566a"),
     layout.Matrix(**layout_theme),
     layout.Bsp(**layout_theme),
     layout.Floating(**layout_theme),
@@ -282,25 +283,26 @@ def init_widgets_list():
                         foreground = colors[2],
                         background = colors[1]
                         ),
-               widget.WindowName(font="Noto Sans",
-                        fontsize = 12,
-                        foreground = colors[5],
-                        background = colors[1],
-                        ),
-               # widget.Net(
-               #          font="Noto Sans",
-               #          fontsize=12,
-               #          interface="enp0s31f6",
-               #          foreground=colors[2],
-               #          background=colors[1],
-               #          padding = 0,
-               #          ),
-               # widget.Sep(
-               #          linewidth = 1,
-               #          padding = 10,
-               #          foreground = colors[2],
-               #          background = colors[1]
-               #          ),
+               #widget.WindowName(font="Noto Sans",
+               #         fontsize = 12,
+               #         foreground = colors[5],
+               #         background = colors[1],
+               #         ),
+                widget.Net(
+                         format = '{down} ↓↑ {up}',
+                         font="Noto Sans",
+                         fontsize=12,
+                         interface="enp5s0",
+                         foreground=colors[2],
+                         background=colors[1],
+                         padding = 0,
+                         ),
+                widget.Sep(
+                         linewidth = 1,
+                         padding = 10,
+                         foreground = colors[2],
+                         background = colors[1]
+                         ),
                # widget.NetGraph(
                #          font="Noto Sans",
                #          fontsize=12,
@@ -359,14 +361,14 @@ def init_widgets_list():
                #          foreground = colors[5],
                #          background = colors[1],
 	           #          ),
-               # widget.TextBox(
-               #          font="FontAwesome",
-               #          text="  ",
-               #          foreground=colors[6],
-               #          background=colors[1],
-               #          padding = 0,
-               #          fontsize=16
-               #          ),
+                widget.TextBox(
+                         font="FontAwesome",
+                         text="  ",
+                         foreground=colors[4],
+                         background=colors[1],
+                         padding = 0,
+                         fontsize=16
+                         ),
                 widget.CPUGraph(
                          border_color = colors[2],
                          fill_color = colors[8],
@@ -408,7 +410,7 @@ def init_widgets_list():
                widget.TextBox(
                         font="FontAwesome",
                         text="  ",
-                        foreground=colors[3],
+                        foreground=colors[4],
                         background=colors[1],
                         padding = 0,
                         fontsize=16
@@ -419,12 +421,12 @@ def init_widgets_list():
                         fontsize = 12,
                         format="%Y-%m-%d %H:%M"
                         ),
-               # widget.Sep(
-               #          linewidth = 1,
-               #          padding = 10,
-               #          foreground = colors[2],
-               #          background = colors[1]
-               #          ),
+                widget.Sep(
+                         linewidth = 1,
+                         padding = 10,
+                         foreground = colors[2],
+                         background = colors[1]
+                         ),
                widget.Systray(
                         background=colors[1],
                         icon_size=20,
@@ -449,8 +451,8 @@ widgets_screen2 = init_widgets_screen2()
 
 
 def init_screens():
-    return [Screen(top=bar.Bar(widgets=init_widgets_screen1(), size=26, opacity=0.8)),
-            Screen(top=bar.Bar(widgets=init_widgets_screen2(), size=26, opacity=0.8))]
+    return [Screen(bottom=bar.Bar(widgets=init_widgets_screen1(), size=26, opacity=0.8)),
+            Screen(bottom=bar.Bar(widgets=init_widgets_screen2(), size=26, opacity=0.8))]
 screens = init_screens()
 
 
