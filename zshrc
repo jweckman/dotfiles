@@ -1,5 +1,5 @@
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="takashiyoshida"
+ZSH_THEME="geoffgarside"
 plugins=(
     git
     zsh-autosuggestions
