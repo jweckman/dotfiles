@@ -68,6 +68,7 @@ endif
 " Plug
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-commentary/'
     Plug 'mechatroner/rainbow_csv'
     Plug 'ap/vim-buftabline'
     Plug 'vimwiki/vimwiki'
@@ -92,11 +93,13 @@ let g:vimwiki_list = [{'path': '/rpi2tb/joakim/documents/wiki', 'syntax': 'markd
 au FileType vimwiki setlocal shiftwidth=6 tabstop=6 noexpandtab
 
 " Telescope configs
-:lua require'finders'
+
+nnoremap <leader>fb :lua require('telescope.builtin').file_browser{}<CR>
+nnoremap <leader>fbb :lua require('telescope.builtin').file_browser{cwd = '%:h'}<CR>
+nnoremap <leader>lb :lua require('telescope.builtin').buffers{}<CR>
 nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR>
-nnoremap <leader>f14 :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po,git}', '/home/joakim/code/test/odoo/'} }<CR>
 nnoremap <leader>fg :lua require('telescope.builtin').live_grep{}<CR>
-nnoremap <leader>fg14 :lua require('telescope.builtin').live_grep{ search_dirs = {'/home/joakim/code/test/odoo/odoo', '/home/joakim/code/test/odoo/addons','/home/joakim/code/test/odoo/sprintit_accounting_super' }}CR>
+nnoremap <leader>fgg :lua require('telescope.builtin').live_grep{search_dirs = {'%:h'}}<CR>
 
 " LSP and Treesitter configs
 lua << EOF
