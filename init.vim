@@ -97,7 +97,7 @@ au FileType vimwiki setlocal shiftwidth=6 tabstop=6 noexpandtab
 nnoremap <leader>fb :lua require('telescope.builtin').file_browser{}<CR>
 nnoremap <leader>fbb :lua require('telescope.builtin').file_browser{cwd = '%:h'}<CR>
 nnoremap <leader>lb :lua require('telescope.builtin').buffers{}<CR>
-nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR>
+nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR><CR>
 nnoremap <leader>fg :lua require('telescope.builtin').live_grep{}<CR>
 nnoremap <leader>fgg :lua require('telescope.builtin').live_grep{search_dirs = {'%:h'}}<CR>
 
