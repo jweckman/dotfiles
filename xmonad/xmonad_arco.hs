@@ -264,6 +264,12 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --Focus selected desktop
   , ((modMask, xK_x ), nextWS)
 
+  --Move window to next workspace
+  , ((modMask .|. shiftMask, xK_x),  shiftToNext)
+
+  --Move window to previous workspace
+  , ((modMask .|. shiftMask, xK_z),    shiftToPrev)
+
   --  Reset the layouts on the current workspace to default.
   , ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf)
 
