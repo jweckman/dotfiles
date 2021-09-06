@@ -148,10 +148,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ ((modMask, xK_t), spawn $ myTerminal )
   , ((modMask, xK_f), sendMessage $ Toggle NBFULL)
   , ((modMask, xK_q), kill )
-  , ((modMask, xK_r), spawn $ "rofi-theme-selector" )
+  --, ((modMask, xK_r), spawn $ "rofi-theme-selector" )
   , ((modMask, xK_v), spawn $ "pavucontrol" )
   , ((modMask, xK_y), spawn $ "polybar-msg cmd toggle" )
-  --, ((modMask, xK_x), spawn $ "arcolinux-logout" )
+  , ((mod1Mask .|. shiftMask, xK_l), spawn $ "arcolinux-logout" )
   , ((modMask, xK_Escape), spawn $ "xkill" )
   , ((modMask, xK_Return), spawn $ myTerminal )
   , ((modMask, xK_p), spawn $ "rofi -show drun -fullscreen" )
@@ -163,7 +163,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((modMask .|. shiftMask , xK_Return ), spawn $ "thunar")
   , ((modMask .|. shiftMask , xK_d ), spawn $ "dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")
-  , ((modMask .|. shiftMask , xK_r ), spawn $ "xmonad --recompile && xmonad --restart")
+  , ((modMask, xK_r ), spawn $ "xmonad --recompile && xmonad --restart")
   , ((modMask .|. shiftMask , xK_q ), kill)
   -- , ((modMask .|. shiftMask , xK_x ), io (exitWith ExitSuccess))
 
@@ -230,10 +230,17 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((0, xF86XK_AudioMute), spawn $ "amixer -q set Master toggle")
 
   -- Decrease volume
-  , ((0, xF86XK_AudioLowerVolume), spawn $ "amixer -q set Master 5%-")
+  , ((0, xF86XK_AudioLowerVolume), spawn $ "amixer -q set Master 2%-")
 
   -- Increase volume
-  , ((0, xF86XK_AudioRaiseVolume), spawn $ "amixer -q set Master 5%+")
+  , ((0, xF86XK_AudioRaiseVolume), spawn $ "amixer -q set Master 2%+")
+
+  -- alternative media keys for any keyboard 
+  , ((mod1Mask .|. controlMask, xK_period), spawn "amixer -q -D pulse sset Master 2%-")
+  , ((mod1Mask .|. controlMask, xK_comma), spawn "amixer -q -D pulse sset Master 2%+")
+  , ((mod1Mask .|. controlMask, xK_m), spawn "amixer -q -D pulse sset Master toggle")
+  -- pavucontrol sound cards and volume management
+  , ((mod1Mask .|. controlMask, xK_p), spawn "pavucontrol --tab 3")
 
   -- Increase brightness
   , ((0, xF86XK_MonBrightnessUp),  spawn $ "xbacklight -inc 5")
