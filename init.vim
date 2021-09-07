@@ -68,11 +68,13 @@ endif
 " Plug
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-commentary/'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fugitive'
     Plug 'mechatroner/rainbow_csv'
     Plug 'ap/vim-buftabline'
     Plug 'vimwiki/vimwiki'
     Plug 'AndrewRadev/linediff.vim'
+    Plug 'vim-airline/vim-airline'
     " Telescope
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
