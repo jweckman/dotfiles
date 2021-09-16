@@ -1,5 +1,4 @@
 syntax on
-set rnu
 set nu rnu
 " Use below setting if no plugins are available. Allows vanilla fuzzy finding
 "set path +=**
@@ -26,6 +25,7 @@ nnoremap <C-L> :bnext<CR>
 nnoremap <C-H> :bprev<CR>
 highlight ColorColumn ctermbg=yellow
 call matchadd('ColorColumn', '\%85v', 100)
+map <leader>t :let $VIM_DIR=expand('%:p:h')<CR>:terminal<CR>cd $VIM_DIR<CR>
 " Try to prettify the builtin way
 map <leader>pp gg=G<C-o><C-o>
 set foldmethod=expr
@@ -97,6 +97,13 @@ call plug#end()
 " Vim Wiki
 let g:vimwiki_list = [{'path': '/rpi2tb/joakim/documents/wiki', 'syntax': 'markdown'}]
 au FileType vimwiki setlocal shiftwidth=6 tabstop=6 noexpandtab
+
+" Vim fugitive
+nmap <leader>gs :Git<CR>
+nmap <leader>gh :diffget //2<CR>
+nmap <leader>gl :diffget //3<CR>
+nmap <leader>gm :Gdiffsplit!<CR>
+nmap <leader>gd :Git diff<CR>
 
 " Telescope configs
 
