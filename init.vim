@@ -24,11 +24,15 @@ nnoremap gv <c-v>
 set hidden
 nnoremap <C-L> :bnext<CR>
 nnoremap <C-H> :bprev<CR>
+highlight ColorColumn ctermbg=yellow
+call matchadd('ColorColumn', '\%85v', 100)
 " Try to prettify the builtin way
 map <leader>pp gg=G<C-o><C-o>
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 
+" File type specific configs
+autocmd FileType xml setlocal expandtab
 " Line diff configs. Allows for comparing the @a and @b register contents
 noremap <leader>ldt :Linediff<CR>
 noremap <leader>ldo :LinediffReset<CR>
@@ -69,6 +73,8 @@ endif
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-commentary/'
+    Plug 'tpope/vim-fugitive/'
+    Plug 'vim-airline/vim-airline'
     Plug 'mechatroner/rainbow_csv'
     Plug 'ap/vim-buftabline'
     Plug 'vimwiki/vimwiki'
@@ -108,6 +114,9 @@ lua << EOF
 require "lsp_signature".setup()
 
 -- Languages setup
+require'lspconfig'.lemminx.setup{
+    cmd = { "/usr/bin/lemminx" };
+}
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.texlab.setup{}
 require'lspconfig'.rust_analyzer.setup{}
@@ -119,6 +128,23 @@ require'lspconfig'.jsonls.setup {
         end
       }
     }
+}
+
+require('telescope').setup{
+  defaults = {
+    layout_strategy = "horizontal",
+    layout_config = {
+      horizontal = {
+        mirror = false,
+      },
+      vertical = {
+        mirror = false,
+      },
+    },
+    --border = {},
+    --borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    path_display = {'absolute'}, --shorten
+  }
 }
 
 -- LSP global keymaps
