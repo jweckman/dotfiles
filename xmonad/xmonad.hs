@@ -71,8 +71,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
+    -- launch terminal
+    , ((modm , xK_t     ), spawn myTerminal)
+
+    -- launch terminal
+    , ((modm , xK_Return   ), spawn myTerminal)
+
     -- close focused window
-    , ((modm .|. shiftMask, xK_c     ), kill)
+    , ((modm , xK_q     ), kill)
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
@@ -96,7 +102,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_m     ), windows W.focusMaster  )
 
     -- Swap the focused window and the master window
-    , ((modm,               xK_Return), windows W.swapMaster)
+    , ((modm,               xK_u), windows W.swapMaster)
 
     -- Swap the focused window with the next window
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
@@ -111,7 +117,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_l     ), sendMessage Expand)
 
     -- Push window back into tiling
-    , ((modm,               xK_t     ), withFocused $ windows . W.sink)
+    , ((modm,               xK_o     ), withFocused $ windows . W.sink)
 
     -- Increment the number of windows in the master area
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
@@ -129,7 +135,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    , ((modm              , xK_q     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_r     ), spawn "xmonad --recompile; xmonad --restart")
 
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
@@ -149,9 +155,20 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_z),   shiftToPrev >> prevWS)
 
     -- Media Keys TODO: implement notify-send
+    -- media keys for home cherry keyboard
     , ((0                     , 0x1008ff11), spawn "amixer -q sset Master 2%-")
     , ((0                     , 0x1008ff13), spawn "amixer -q sset Master 2%+")
     , ((0                     , 0x1008ff12), spawn "amixer set Master toggle")
+    -- alternative media keys for any keyboard 
+    , ((mod1Mask .|. controlMask, xK_period), spawn "amixer -q -D pulse sset Master 2%-")
+    , ((mod1Mask .|. controlMask, xK_comma), spawn "amixer  --q -D pulse sset Master 2%+")
+    , ((mod1Mask .|. controlMask, xK_m), spawn "amixer  -q -D pulse sset Master toggle")
+    -- pavucontrol sound cards and volume management
+    , ((mod1Mask .|. controlMask, xK_p), spawn "pavucontrol --tab 3")
+    -- Screenshot
+    , ((controlMask .|. shiftMask , xK_Print ), spawn $ "gnome-screenshot -i")
+    -- Screensaver
+    , ((mod1Mask .|. shiftMask, xK_l), spawn "xscreensaver-command -lock")
 
     ]
     ++
@@ -169,8 +186,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
     -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
     --
-    [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+    [((m .|. modm .|. controlMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_z, xK_x, xK_c] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 

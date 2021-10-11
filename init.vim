@@ -1,5 +1,4 @@
 syntax on
-set rnu
 set nu rnu
 " Use below setting if no plugins are available. Allows vanilla fuzzy finding
 "set path +=**
@@ -24,11 +23,16 @@ nnoremap gv <c-v>
 set hidden
 nnoremap <C-L> :bnext<CR>
 nnoremap <C-H> :bprev<CR>
+highlight ColorColumn ctermbg=yellow
+call matchadd('ColorColumn', '\%85v', 100)
+map <leader>t :let $VIM_DIR=expand('%:p:h')<CR>:terminal<CR>cd $VIM_DIR<CR>
 " Try to prettify the builtin way
 map <leader>pp gg=G<C-o><C-o>
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 
+" File type specific configs
+autocmd FileType xml setlocal expandtab
 " Line diff configs. Allows for comparing the @a and @b register contents
 noremap <leader>ldt :Linediff<CR>
 noremap <leader>ldo :LinediffReset<CR>
@@ -68,13 +72,13 @@ endif
 " Plug
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-commentary/'
+    Plug 'tpope/vim-fugitive/'
+    Plug 'vim-airline/vim-airline'
     Plug 'mechatroner/rainbow_csv'
     Plug 'ap/vim-buftabline'
     Plug 'vimwiki/vimwiki'
     Plug 'AndrewRadev/linediff.vim'
-    Plug 'vim-airline/vim-airline'
     " Telescope
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
@@ -94,6 +98,13 @@ call plug#end()
 let g:vimwiki_list = [{'path': '/rpi2tb/joakim/documents/wiki', 'syntax': 'markdown'}]
 au FileType vimwiki setlocal shiftwidth=6 tabstop=6 noexpandtab
 
+" Vim fugitive
+nmap <leader>gs :Git<CR>
+nmap <leader>gh :diffget //2<CR>
+nmap <leader>gl :diffget //3<CR>
+nmap <leader>gm :Gdiffsplit!<CR>
+nmap <leader>gd :Git diff<CR>
+
 " Telescope configs
 
 nnoremap <leader>fb :lua require('telescope.builtin').file_browser{}<CR>
@@ -110,6 +121,9 @@ lua << EOF
 require "lsp_signature".setup()
 
 -- Languages setup
+require'lspconfig'.lemminx.setup{
+    cmd = { "/usr/bin/lemminx" };
+}
 require'lspconfig'.pyright.setup{}
 require'lspconfig'.texlab.setup{}
 require'lspconfig'.rust_analyzer.setup{}
@@ -121,6 +135,23 @@ require'lspconfig'.jsonls.setup {
         end
       }
     }
+}
+
+require('telescope').setup{
+  defaults = {
+    layout_strategy = "horizontal",
+    layout_config = {
+      horizontal = {
+        mirror = false,
+      },
+      vertical = {
+        mirror = false,
+      },
+    },
+    --border = {},
+    --borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    path_display = {'absolute'}, --shorten
+  }
 }
 
 -- LSP global keymaps
