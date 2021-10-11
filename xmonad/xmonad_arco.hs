@@ -29,6 +29,7 @@ import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.IndependentScreens
 import XMonad.Layout.LayoutModifier(ModifiedLayout)
 import XMonad.Layout.Renamed
+import XMonad.Layout.NoBorders
 
 
 import XMonad.Layout.CenteredMaster(centerMaster)
@@ -116,7 +117,7 @@ tall =
         ResizableTall 1 (3/100) (1/2) []
 
 
-myLayout = spacingRaw True (Border 1 1 1 1) True (Border 1 1 1 1) True $ avoidStruts $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) $ tall ||| Mirror tall ||| spiral (6/7)  ||| ThreeColMid 1 (3/100) (1/2) ||| Full
+myLayout = spacingRaw True (Border 1 1 1 1) True (Border 1 1 1 1) True $ smartBorders . avoidStruts $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) $ tall ||| Mirror tall ||| spiral (6/7)  ||| ThreeColMid 1 (3/100) (1/2) ||| Full
     where
         nmaster = 1
         delta = 3/100
@@ -163,8 +164,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   , ((modMask .|. shiftMask , xK_Return ), spawn $ "thunar")
   , ((modMask .|. shiftMask , xK_d ), spawn $ "dmenu_run -i -nb '#191919' -nf '#fea63c' -sb '#fea63c' -sf '#191919' -fn 'NotoMonoRegular:bold:pixelsize=14'")
+  -- Quit xmonad
+  , ((modMask .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
   , ((modMask, xK_r ), spawn $ "xmonad --recompile && xmonad --restart")
-  , ((modMask .|. shiftMask , xK_q ), kill)
   -- , ((modMask .|. shiftMask , xK_x ), io (exitWith ExitSuccess))
 
   -- CONTROL + ALT KEYS
