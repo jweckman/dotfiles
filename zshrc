@@ -10,9 +10,9 @@ source $ZSH/oh-my-zsh.sh
 # USERCONFIG
 
 # ASDF version manager
-source $HOME/.asdf/asdf.sh
+#source $HOME/.asdf/asdf.sh
 # Rust language
-source $HOME/.cargo/env
+#source $HOME/.cargo/env
 
 # General
 set -o vi
@@ -55,4 +55,4 @@ fpath=(${ASDF_DIR}/completions $fpath)
 autoload -Uz compinit && compinit
 
 # Swap esc and capslock
-setxkbmap -option caps:swapescape
+setxkbmap -option caps:escape

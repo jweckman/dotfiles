@@ -11,6 +11,7 @@ import XMonad
 import XMonad.Util.SpawnOnce
 import Data.Monoid
 import System.Exit
+import XMonad.Hooks.EwmhDesktops
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -256,7 +257,11 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+    , resource  =? "kdesktop"       --> doIgnore 
+    , className =? "hl_linux"       --> doFloat
+    --, className =? "Mindustry"      --> doFloat
+    --, className =? "csgo_linux64"   --> doFloat
+    ]
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -267,7 +272,6 @@ myManageHook = composeAll
 -- return (All True) if the default handler is to be run afterwards. To
 -- combine event hooks use mappend or mconcat from Data.Monoid.
 --
-myEventHook = mempty
 
 ------------------------------------------------------------------------
 -- Status bars and logging
@@ -302,7 +306,7 @@ main = xmonad defaults
 --
 -- No need to modify this.
 --
-defaults = def {
+defaults = ewmh def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -320,7 +324,7 @@ defaults = def {
       -- hooks, layouts
         layoutHook         = myLayout,
         manageHook         = myManageHook,
-        handleEventHook    = myEventHook,
+        handleEventHook    = handleEventHook def <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
     }
