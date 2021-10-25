@@ -83,6 +83,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- close focused window
     , ((modm , xK_q     ), kill)
 
+    -- open custom notification dashboard
+    , ((modm , xK_s     ), spawn "~/scripts/notification_dash.sh")
+
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
 
