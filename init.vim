@@ -114,6 +114,7 @@ nnoremap <leader>fd :lua require('telescope.builtin').find_files{search_dirs = {
 nnoremap <leader>fg  :lua require("telescope").extensions.live_grep_raw.live_grep_raw() 
 nnoremap <leader>fgg :lua require('telescope.builtin').live_grep{search_dirs = {'%:h'}}<CR>
 nnoremap <leader>fgd :lua require('telescope.builtin').live_grep{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'}}<CR>
+nnoremap <leader>ll :lua require('telescope.builtin').buffers()<CR>
 
 " LSP and Treesitter configs
 lua << EOF
