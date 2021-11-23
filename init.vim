@@ -152,7 +152,7 @@ require('telescope').setup{
     },
     --border = {},
     --borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-    path_display = {'absolute'}, --shorten
+    path_display = {'smart'}, --shorten
   }
 }
 
