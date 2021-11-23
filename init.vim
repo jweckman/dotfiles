@@ -82,6 +82,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzy-native.nvim'
+    Plug 'nvim-telescope/telescope-rg.nvim'
     " Treesitter
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/playground'
@@ -109,8 +110,10 @@ nnoremap <leader>fb :lua require('telescope.builtin').file_browser{}<CR>
 nnoremap <leader>fbb :lua require('telescope.builtin').file_browser{cwd = '%:h'}<CR>
 nnoremap <leader>lb :lua require('telescope.builtin').buffers{}<CR>
 nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR><CR>
-nnoremap <leader>fg :lua require('telescope.builtin').live_grep{}<CR>
+nnoremap <leader>fd :lua require('telescope.builtin').find_files{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'} }<CR>
+nnoremap <leader>fg  :lua require("telescope").extensions.live_grep_raw.live_grep_raw() 
 nnoremap <leader>fgg :lua require('telescope.builtin').live_grep{search_dirs = {'%:h'}}<CR>
+nnoremap <leader>fgd :lua require('telescope.builtin').live_grep{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'}}<CR>
 
 " LSP and Treesitter configs
 lua << EOF
