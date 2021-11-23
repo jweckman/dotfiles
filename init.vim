@@ -21,10 +21,10 @@ set foldlevel=2
 let mapleader=","
 nnoremap gv <c-v>
 set hidden
+set list
+set listchars=tab:›\ ,trail:⋅
 nnoremap <C-L> :bnext<CR>
 nnoremap <C-H> :bprev<CR>
-highlight ColorColumn ctermbg=yellow
-call matchadd('ColorColumn', '\%85v', 100)
 map <leader>t :let $VIM_DIR=expand('%:p:h')<CR>:terminal<CR>cd $VIM_DIR<CR>
 " Try to prettify the builtin way
 map <leader>pp gg=G<C-o><C-o>
@@ -76,9 +76,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-fugitive/'
     Plug 'vim-airline/vim-airline'
     Plug 'mechatroner/rainbow_csv'
-    Plug 'ap/vim-buftabline'
     Plug 'vimwiki/vimwiki'
-    Plug 'AndrewRadev/linediff.vim'
     " Telescope
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
@@ -89,7 +87,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-treesitter/playground'
     " LSP
     Plug 'neovim/nvim-lspconfig'
-    Plug 'hrsh7th/nvim-compe'
+    "Plug 'hrsh7th/nvim-cmp'
     Plug 'simrat39/rust-tools.nvim'
     Plug 'ray-x/lsp_signature.nvim'
 call plug#end()
@@ -183,30 +181,6 @@ require'nvim-treesitter.configs'.setup {
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.tsx.used_by = { "javascript", "typescript.tsx", "python" }
 
--- Compe
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
-
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    vsnip = true;
-  };
-}
 vim.o.completeopt = "menuone,noselect"
 
 EOF
