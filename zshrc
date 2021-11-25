@@ -34,7 +34,7 @@ export VISUAL='nvim'
 # Aliases
 alias weather='python /rpi2tb/joakim/coding_projects/python/fishing_data/weather/ilmatieteen_laitos.py'
 alias mpgn='mv ~/Downloads/*.pgn /rpi2tb/joakim/chess/db/joakim/'
-alias lynx='lynx --vikeys'
+alias lynx='lynx --vikeys --display_charset=utf-8'
 alias clean_filenames='python $HOME/scripts/clean_filenames.py'
 alias c='xclip -selection clipboard'
 alias v='xclip -o'
