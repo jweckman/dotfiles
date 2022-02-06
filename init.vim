@@ -28,6 +28,7 @@ nnoremap <C-H> :bprev<CR>
 map <leader>t :let $VIM_DIR=expand('%:p:h')<CR>:terminal<CR>cd $VIM_DIR<CR>
 " Try to prettify the builtin way
 map <leader>pp gg=G<C-o><C-o>
+set clipboard+=unnamedplus
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 
@@ -72,11 +73,11 @@ endif
 " Plug
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-commentary/'
     Plug 'tpope/vim-fugitive/'
     Plug 'vim-airline/vim-airline'
     Plug 'mechatroner/rainbow_csv'
     Plug 'vimwiki/vimwiki'
+    Plug 'numToStr/Comment.nvim'
     " Telescope
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
@@ -109,12 +110,13 @@ nmap <leader>gd :Git diff<CR>
 nnoremap <leader>fb :lua require('telescope.builtin').file_browser{}<CR>
 nnoremap <leader>fbb :lua require('telescope.builtin').file_browser{cwd = '%:h'}<CR>
 nnoremap <leader>lb :lua require('telescope.builtin').buffers{}<CR>
-nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR><CR>
+nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR>
 nnoremap <leader>fd :lua require('telescope.builtin').find_files{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'} }<CR>
 nnoremap <leader>fg  :lua require("telescope").extensions.live_grep_raw.live_grep_raw() 
 nnoremap <leader>fgg :lua require('telescope.builtin').live_grep{search_dirs = {'%:h'}}<CR>
 nnoremap <leader>fgd :lua require('telescope.builtin').live_grep{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'}}<CR>
 nnoremap <leader>ll :lua require('telescope.builtin').buffers()<CR>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " LSP and Treesitter configs
 lua << EOF
@@ -126,7 +128,18 @@ require "lsp_signature".setup()
 require'lspconfig'.lemminx.setup{
     cmd = { "/usr/bin/lemminx" };
 }
-require'lspconfig'.pyright.setup{}
+--require'lspconfig'.jedi_language_server.setup{}
+require'lspconfig'.pyright.setup{
+settings = {
+      python = {
+        analysis = {
+          autoSearchPaths = false,
+          diagnosticMode = "workspace",
+          useLibraryCodeForTypes = true
+        }
+      }
+    }
+}
 require'lspconfig'.texlab.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.jsonls.setup {
@@ -138,6 +151,8 @@ require'lspconfig'.jsonls.setup {
       }
     }
 }
+require'lspconfig'.tsserver.setup{}
+require('lua-ls')
 
 require('telescope').setup{
   defaults = {
@@ -156,6 +171,9 @@ require('telescope').setup{
   }
 }
 
+-- Comment plugin setup
+require('Comment').setup()
+
 -- LSP global keymaps
 local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -163,6 +181,22 @@ vim.api.nvim_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opt
 vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>sh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+
+vim.api.nvim_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+vim.api.nvim_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+vim.api.nvim_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
@@ -180,6 +214,7 @@ require'nvim-treesitter.configs'.setup {
     "json",
     "yaml",
     "html",
+    "javascript",
   },
 }
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
