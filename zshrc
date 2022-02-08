@@ -42,7 +42,8 @@ alias vim="nvim"
 alias vi="nvim"
 alias oldvim="vim"
 alias scripts="whence -pm '*' | grep scripts"
-alias ls="ls --color=auto"
+alias ls="exa --color=auto"
+alias cat="bat"
 alias tree="tree -I '*.pyc'"
 function open () {
     xdg-open "$*" &
@@ -56,3 +57,4 @@ autoload -Uz compinit && compinit
 
 # Swap esc and capslock
 setxkbmap -option caps:escape
+alias luamake=/home/joakim/.config/nvim/lua-language-server/3rd/luamake/luamake
