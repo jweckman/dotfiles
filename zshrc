@@ -42,7 +42,9 @@ alias vim="nvim"
 alias vi="nvim"
 alias oldvim="vim"
 alias scripts="whence -pm '*' | grep scripts"
-alias ls="exa --color=auto"
+alias ls="exa"
+alias lsl="exa -l"
+alias lslt="exa -l -snew"
 alias cat="bat"
 alias tree="tree -I '*.pyc'"
 function open () {
@@ -55,6 +57,6 @@ fpath=(${ASDF_DIR}/completions $fpath)
 # initialise completions with ZSH's compinit
 autoload -Uz compinit && compinit
 
-# Swap esc and capslock
+# Set capslock to be escape
 setxkbmap -option caps:escape
 alias luamake=/home/joakim/.config/nvim/lua-language-server/3rd/luamake/luamake
