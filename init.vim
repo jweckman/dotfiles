@@ -31,6 +31,7 @@ map <leader>pp gg=G<C-o><C-o>
 set clipboard+=unnamedplus
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
+nnoremap <leader>cdd :cd %:p:h<CR>:pwd<CR>
 
 " File type specific configs
 autocmd FileType xml setlocal expandtab
