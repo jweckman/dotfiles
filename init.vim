@@ -79,12 +79,14 @@ call plug#begin('~/.vim/plugged')
     Plug 'mechatroner/rainbow_csv'
     Plug 'vimwiki/vimwiki'
     Plug 'numToStr/Comment.nvim'
+    Plug 'theHamsta/nvim-dap-virtual-text'
     " Telescope
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzy-native.nvim'
     Plug 'nvim-telescope/telescope-rg.nvim'
+    Plug 'nvim-telescope/telescope-dap.nvim'
     " Treesitter
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'nvim-treesitter/playground'
@@ -93,6 +95,11 @@ call plug#begin('~/.vim/plugged')
     "Plug 'hrsh7th/nvim-cmp'
     Plug 'simrat39/rust-tools.nvim'
     Plug 'ray-x/lsp_signature.nvim'
+    Plug '/home/joakim/code/odoo.nvim'
+    "DAP
+    Plug 'mfussenegger/nvim-dap'
+    Plug 'mfussenegger/nvim-dap-python'
+
 call plug#end()
 
 " Vim Wiki
@@ -175,6 +182,11 @@ require('telescope').setup{
 -- Comment plugin setup
 require('Comment').setup()
 
+-- Debugging tool initialization
+require('dap-python').setup('~/.venvs/debugpy/bin/python')
+require('dap-python').test_runner = 'pytest'
+
+
 -- LSP global keymaps
 local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -219,8 +231,28 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.tsx.used_by = { "javascript", "typescript.tsx", "python" }
+parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx", "python" }
 
 vim.o.completeopt = "menuone,noselect"
 
+-- Plugin editing helper functions
+P = function(v)
+  print(vim.inspect(v))
+  return v
+end
+
 EOF
+
+nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
+nnoremap <silent> <leader>dov :lua require'dap'.step_over()<CR>
+nnoremap <silent> <leader>dsi :lua require'dap'.step_into()<CR>
+nnoremap <silent> <leader>dso :lua require'dap'.step_out()<CR>
+nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <silent> <leader>dsb :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+nnoremap <silent> <leader>dlp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
+nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
+nnoremap <silent> <leader>ds :lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>
+nnoremap <silent> <leader>di :lua require'dap.ui.widgets'.hover()<CR>
+
+let g:dap_virtual_text = v:true
