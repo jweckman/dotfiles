@@ -92,6 +92,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-treesitter/playground'
     " LSP
     Plug 'neovim/nvim-lspconfig'
+    Plug 'lspcontainers/lspcontainers.nvim'
     "Plug 'hrsh7th/nvim-cmp'
     Plug 'simrat39/rust-tools.nvim'
     Plug 'ray-x/lsp_signature.nvim'
@@ -161,6 +162,12 @@ require'lspconfig'.jsonls.setup {
 }
 require'lspconfig'.tsserver.setup{}
 require('lua-ls')
+require'lspconfig'.dockerls.setup {
+  before_init = function(params)
+    params.processId = vim.NIL
+  end,
+  cmd = require'lspcontainers'.command('dockerls'),
+}
 
 require('telescope').setup{
   defaults = {
