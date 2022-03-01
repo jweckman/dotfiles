@@ -74,12 +74,16 @@ endif
 " Plug
 call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-fugitive/'
     Plug 'vim-airline/vim-airline'
     Plug 'mechatroner/rainbow_csv'
     Plug 'vimwiki/vimwiki'
     Plug 'numToStr/Comment.nvim'
     Plug 'theHamsta/nvim-dap-virtual-text'
+    " Git
+    Plug 'tpope/vim-fugitive/'
+    Plug 'emmanueltouzery/agitator.nvim'
+    Plug 'TimUntersberger/neogit'
+    Plug 'sindrets/diffview.nvim'
     " Telescope
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
@@ -112,7 +116,6 @@ nmap <leader>gs :Git<CR>
 nmap <leader>gh :diffget //2<CR>
 nmap <leader>gl :diffget //3<CR>
 nmap <leader>gm :Gdiffsplit!<CR>
-nmap <leader>gd :Git diff<CR>
 
 " Telescope configs
 
@@ -248,6 +251,18 @@ P = function(v)
   return v
 end
 
+-- Neogit and diffview
+local cb = require "diffview.config".diffview_callback
+require'diffview'.setup {}
+
+local neogit = require('neogit')
+neogit.setup {
+    disable_commit_confirmation = true,
+    integrations = {
+        diffview = true
+    }
+}
+
 EOF
 
 nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
@@ -263,3 +278,9 @@ nnoremap <silent> <leader>ds :lua local widgets=require'dap.ui.widgets';widgets.
 nnoremap <silent> <leader>di :lua require'dap.ui.widgets'.hover()<CR>
 
 let g:dap_virtual_text = v:true
+
+nmap <leader>gd :DiffviewOpen<CR>
+nmap <leader>gg :Neogit<CR>
+nmap <leader>gl :Neogit log<CR>
+nmap <leader>gp :Neogit push<CR>
+
