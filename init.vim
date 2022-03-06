@@ -101,7 +101,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'simrat39/rust-tools.nvim'
     Plug 'ray-x/lsp_signature.nvim'
     Plug '/home/joakim/code/odoo.nvim'
-    "DAP
+    " DAP
     Plug 'mfussenegger/nvim-dap'
     Plug 'mfussenegger/nvim-dap-python'
 
@@ -263,19 +263,72 @@ neogit.setup {
     }
 }
 
-EOF
+DAPATTACH = {}
 
-nnoremap <silent> <leader>dc :lua require'dap'.continue()<CR>
-nnoremap <silent> <leader>dov :lua require'dap'.step_over()<CR>
-nnoremap <silent> <leader>dsi :lua require'dap'.step_into()<CR>
-nnoremap <silent> <leader>dso :lua require'dap'.step_out()<CR>
-nnoremap <silent> <leader>db :lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <silent> <leader>dsb :lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
-nnoremap <silent> <leader>dlp :lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
-nnoremap <silent> <leader>dr :lua require'dap'.repl.open()<CR>
-nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
-nnoremap <silent> <leader>ds :lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>
-nnoremap <silent> <leader>di :lua require'dap.ui.widgets'.hover()<CR>
+DAPATTACH.attach_python_debugger = function()
+    local adapter_config = {
+        ['/home/joakim/docker-volumes/data-pydebugdemo'] = {
+            adapter = {
+                host = '172.19.0.2',
+                port = '12345'
+            },
+            remote_root = '/home/joakim/data-pydebugdemo'
+        }
+    }
+    local config = nil
+    for candidate_parent, conf in pairs(adapter_config) do
+        patternized_cp = string.gsub(candidate_parent, '-', '.')
+        local is_substr = string.match(vim.fn.getcwd(), patternized_cp)
+        if is_substr ~= nil then
+            config = conf
+        end
+    end
+    local dap = require "dap"
+    local adapter = config['adapter']
+    pythonAttachAdapter = {
+        type = "server";
+        host = adapter;
+        port = tonumber(adapter['port']);
+    }
+    pythonAttachConfig = {
+        type = "python";
+        request = "attach";
+        connect = {
+            port = tonumber(adapter['port']);
+            host = host;
+        };
+        mode = "remote";
+        name = "Remote Attached Debugger";
+        cwd = vim.fn.getcwd();
+        pathMappings = {
+            {
+                localRoot = vim.fn.getcwd(); -- Wherever your Python code lives locally.
+                remoteRoot = config['remote_root']; -- Wherever your Python code lives in the container.
+            };
+        };
+    }
+    local session = dap.attach(adapter, pythonAttachConfig)
+    if session == nil then
+        io.write("Error launching adapter");
+    end
+    dap.repl.open()
+end
+
+-- DAP keybindings
+vim.api.nvim_set_keymap('n', '<leader>da', "<cmd>lua DAPATTACH.attach_python_debugger()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>dc', "<cmd>lua require'dap'.continue()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>dov', "<cmd>lua require'dap'.step_over()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>dsi', "<cmd>lua require'dap'.step_into()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>dso', "<cmd>lua require'dap'.step_out()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>db', "<cmd>lua require'dap'.toggle_breakpoint()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>dsb', "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>dlp', "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>dr', "<cmd>lua require'dap'.repl_open()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>dl', "<cmd>lua require'dap'.run_last()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>ds', "<cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>di', "<cmd>lua require'dap.ui.widgets'.hover()<CR>", opts)
+
+EOF
 
 let g:dap_virtual_text = v:true
 
@@ -283,4 +336,3 @@ nmap <leader>gd :DiffviewOpen<CR>
 nmap <leader>gg :Neogit<CR>
 nmap <leader>gl :Neogit log<CR>
 nmap <leader>gp :Neogit push<CR>
-
