@@ -88,6 +88,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-file-browser.nvim'
     Plug 'nvim-telescope/telescope-fzy-native.nvim'
     Plug 'nvim-telescope/telescope-rg.nvim'
     Plug 'nvim-telescope/telescope-dap.nvim'
@@ -119,8 +120,8 @@ nmap <leader>gm :Gdiffsplit!<CR>
 
 " Telescope configs
 
-nnoremap <leader>fb :lua require('telescope.builtin').file_browser{}<CR>
-nnoremap <leader>fbb :lua require('telescope.builtin').file_browser{cwd = '%:h'}<CR>
+" nnoremap <leader>fb :lua require('telescope.builtin').file_browser{}<CR>
+" nnoremap <leader>fbb :lua require('telescope.builtin').file_browser{cwd = '%:h'}<CR>
 nnoremap <leader>lb :lua require('telescope.builtin').buffers{}<CR>
 nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR>
 nnoremap <leader>fd :lua require('telescope.builtin').find_files{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'} }<CR>
@@ -172,6 +173,7 @@ require'lspconfig'.dockerls.setup {
   cmd = require'lspcontainers'.command('dockerls'),
 }
 
+-- Telescope configs
 require('telescope').setup{
   defaults = {
     layout_strategy = "horizontal",
@@ -188,6 +190,15 @@ require('telescope').setup{
     path_display = {'smart'}, --shorten
   }
 }
+
+require("telescope").load_extension "file_browser"
+
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>fb",
+  ":Telescope file_browser<CR>",
+  { noremap = true }
+)
 
 -- Comment plugin setup
 require('Comment').setup()
@@ -263,16 +274,41 @@ neogit.setup {
     }
 }
 
+local get_docker_service_ips = function()
+    local handle = io.popen("docker ps -q | xargs -n 1 docker inspect --format '{{ .Name }} {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' | sed 's#^/##';")
+    local service_ip_str = handle:read("*a")
+    handle:close()
+    local res = {}
+    for line in service_ip_str:gmatch("[^\r\n]+") do
+        local service_ip = {}
+        for w in line:gmatch("%S+") do
+            service_ip[#service_ip + 1] = w
+        end
+        res[service_ip[1]] = service_ip[2]
+    end
+    return res
+end
+
 DAPATTACH = {}
 
 DAPATTACH.attach_python_debugger = function()
+    local docker_service_ips = get_docker_service_ips()
     local adapter_config = {
         ['/home/joakim/docker-volumes/data-pydebugdemo'] = {
+            docker_service_name = 'debug-python', 
             adapter = {
-                host = '172.19.0.2',
+                host = nil,
                 port = '12345'
             },
             remote_root = '/home/joakim/data-pydebugdemo'
+        },
+        ['/home/joakim/code/odoo15/odoo/src'] = {
+            docker_service_name = 'odoo15', 
+            adapter = {
+                host = nil,
+                port = '12345'
+            },
+            remote_root = '/odoo/src'
         }
     }
     local config = nil
@@ -284,7 +320,11 @@ DAPATTACH.attach_python_debugger = function()
         end
     end
     local dap = require "dap"
+    docker_service_name = config['docker_service_name']
     local adapter = config['adapter']
+    if docker_service_name ~= nil then
+        adapter['host'] = docker_service_ips[docker_service_name]
+    end
     pythonAttachAdapter = {
         type = "server";
         host = adapter;
