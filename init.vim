@@ -31,7 +31,7 @@ map <leader>pp gg=G<C-o><C-o>
 set clipboard+=unnamedplus
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
-nnoremap <leader>cdd :cd %:p:h<CR>:pwd<CR>
+nnoremap <leader>cfd :cd %:p:h<CR>:pwd<CR>
 
 " File type specific configs
 autocmd FileType xml setlocal expandtab
@@ -173,7 +173,40 @@ require'lspconfig'.dockerls.setup {
   cmd = require'lspcontainers'.command('dockerls'),
 }
 
--- Telescope configs
+-- Telescope commonly used paths picker
+local actions = require "telescope.actions"
+local action_state = require "telescope.actions.state"
+local pickers = require "telescope.pickers"
+local finders = require "telescope.finders"
+local sorters = require "telescope.sorters"
+
+function enter(prompt_bufnr)
+    local selected = action_state.get_selected_entry()
+    vim.api.nvim_set_current_dir(selected[1])
+    --How to run general vim commans
+    --local cmd = 'cd ' .. selected[1]
+    --vim.cmd(cmd)
+    actions.close(prompt_bufnr)
+end
+
+local path_opts = {
+    finder = finders.new_table {
+        "/home/joakim",
+        "/home/joakim/code",
+    },
+    sorter = sorters.get_generic_fuzzy_sorter({}),
+
+    attach_mappings = function(prompt_bufnr, map)
+    map("n", "<CR>", enter)
+    map( "i", "<CR>", enter)
+    return true
+    end,
+}
+
+
+common_paths = pickers.new(path_opts)
+
+-- Telescope general setup
 require('telescope').setup{
   defaults = {
     layout_strategy = "horizontal",
@@ -368,11 +401,14 @@ vim.api.nvim_set_keymap('n', '<leader>dl', "<cmd>lua require'dap'.run_last()<CR>
 vim.api.nvim_set_keymap('n', '<leader>ds', "<cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>di', "<cmd>lua require'dap.ui.widgets'.hover()<CR>", opts)
 
+-- General keybindings
+vim.api.nvim_set_keymap('n', '<leader>cd', "<cmd>lua common_paths:find()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>gg', "<cmd>Neogit<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>gl', "<cmd>Neogit log<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>gp', "<cmd>Neogit push<CR>", opts)
+--vim.api.nvim_set_keymap('n', '<leader>gd', "<cmd>DiffviewOpen<CR>", opts)
+
 EOF
 
 let g:dap_virtual_text = v:true
 
-nmap <leader>gd :DiffviewOpen<CR>
-nmap <leader>gg :Neogit<CR>
-nmap <leader>gl :Neogit log<CR>
-nmap <leader>gp :Neogit push<CR>
