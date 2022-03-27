@@ -402,7 +402,7 @@ vim.api.nvim_set_keymap('n', '<leader>ds', "<cmd>lua local widgets=require'dap.u
 vim.api.nvim_set_keymap('n', '<leader>di', "<cmd>lua require'dap.ui.widgets'.hover()<CR>", opts)
 
 -- General keybindings
-vim.api.nvim_set_keymap('n', '<leader>cd', "<cmd>lua common_paths:find()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>cd', "<cmd>lua require'custom_pickers'.common_paths()<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>gg', "<cmd>Neogit<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>gl', "<cmd>Neogit log<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>gp', "<cmd>Neogit push<CR>", opts)
