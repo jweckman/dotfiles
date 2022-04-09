@@ -173,22 +173,6 @@ require'lspconfig'.dockerls.setup {
   cmd = require'lspcontainers'.command('dockerls'),
 }
 
--- Telescope commonly used paths picker
-local actions = require "telescope.actions"
-local action_state = require "telescope.actions.state"
-local pickers = require "telescope.pickers"
-local finders = require "telescope.finders"
-local sorters = require "telescope.sorters"
-
-function enter(prompt_bufnr)
-    local selected = action_state.get_selected_entry()
-    vim.api.nvim_set_current_dir(selected[1])
-    --How to run general vim commans
-    --local cmd = 'cd ' .. selected[1]
-    --vim.cmd(cmd)
-    actions.close(prompt_bufnr)
-end
-
 -- Telescope general setup
 require('telescope').setup{
   defaults = {
