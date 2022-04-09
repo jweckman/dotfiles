@@ -125,7 +125,7 @@ nmap <leader>gm :Gdiffsplit!<CR>
 nnoremap <leader>lb :lua require('telescope.builtin').buffers{}<CR>
 nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR>
 nnoremap <leader>fd :lua require('telescope.builtin').find_files{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'} }<CR>
-nnoremap <leader>fg  :lua require("telescope").extensions.live_grep_raw.live_grep_raw() 
+nnoremap <leader>fg  :lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>
 nnoremap <leader>fgg :lua require('telescope.builtin').live_grep{search_dirs = {'%:h'}}<CR>
 nnoremap <leader>fgd :lua require('telescope.builtin').live_grep{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'}}<CR>
 nnoremap <leader>ll :lua require('telescope.builtin').buffers()<CR>
@@ -189,28 +189,12 @@ function enter(prompt_bufnr)
     actions.close(prompt_bufnr)
 end
 
-local path_opts = {
-    finder = finders.new_table {
-        "/home/joakim",
-        "/home/joakim/code",
-    },
-    sorter = sorters.get_generic_fuzzy_sorter({}),
-
-    attach_mappings = function(prompt_bufnr, map)
-    map("n", "<CR>", enter)
-    map( "i", "<CR>", enter)
-    return true
-    end,
-}
-
-
-common_paths = pickers.new(path_opts)
-
 -- Telescope general setup
 require('telescope').setup{
   defaults = {
     layout_strategy = "horizontal",
     layout_config = {
+      width = 0.96,
       horizontal = {
         mirror = false,
       },
@@ -220,8 +204,11 @@ require('telescope').setup{
     },
     --border = {},
     --borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-    path_display = {'smart'}, --shorten
-  }
+    path_display = {
+        'truncate',
+        shorten = { len = 3, exclude = {1, -2, -1} }
+    },
+  },
 }
 
 require("telescope").load_extension "file_browser"
