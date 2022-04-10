@@ -37,6 +37,7 @@ nnoremap <leader>cfd :cd %:p:h<CR>:pwd<CR>
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd FileType xml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype json setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype yaml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 " Line diff configs. Allows for comparing the @a and @b register contents
 noremap <leader>ldt :Linediff<CR>
 noremap <leader>ldo :LinediffReset<CR>
