@@ -141,18 +141,18 @@ require "lsp_signature".setup()
 require'lspconfig'.lemminx.setup{
     cmd = { "/usr/bin/lemminx" };
 }
---require'lspconfig'.jedi_language_server.setup{}
-require'lspconfig'.pyright.setup{
-settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = false,
-          diagnosticMode = "workspace",
-          useLibraryCodeForTypes = true
-        }
-      }
-    }
-}
+require'lspconfig'.jedi_language_server.setup{}
+--require'lspconfig'.pyright.setup{
+--settings = {
+--      python = {
+--        analysis = {
+--          autoSearchPaths = false,
+--          diagnosticMode = "workspace",
+--          useLibraryCodeForTypes = true
+--        }
+--      }
+--    }
+--}
 require'lspconfig'.texlab.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.jsonls.setup {
@@ -306,13 +306,13 @@ DAPATTACH.attach_python_debugger = function()
             },
             remote_root = '/home/joakim/data-pydebugdemo'
         },
-        ['/home/joakim/code/odoo15/odoo/src'] = {
+        ['/home/joakim/code/odoo15/odoo'] = {
             docker_service_name = 'odoo15', 
             adapter = {
                 host = nil,
                 port = '12345'
             },
-            remote_root = '/odoo/src'
+            remote_root = '/odoo'
         }
     }
     local config = nil
