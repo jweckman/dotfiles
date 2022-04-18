@@ -1,0 +1,76 @@
+# Completion init
+# Uses cache unless updated within 24h
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+  touch .zcompdump
+else
+  compinit -C
+fi
+
+setopt prompt_subst
+
+# Manually sourcing plugins from various sources
+source ~/source_installs/ohmyzsh/themes/geoffgarside.zsh-theme
+source ~/source_installs/ohmyzsh/lib/theme-and-appearance.zsh
+source ~/source_installs/ohmyzsh/lib/prompt_info_functions.zsh
+source ~/source_installs/ohmyzsh/lib/git.zsh
+
+manual_plugins=(
+    ~/source_installs/ohmyzsh/plugins/git/git.plugin.zsh
+    ~/source_installs/ohmyzsh/plugins/git-prompt/git-prompt.plugin.zsh
+    ~/source_installs/ohmyzsh/plugins/vi-mode/vi-mode.plugin.zsh
+    ~/source_installs/zsh-autosuggestions/zsh-autosuggestions.zsh
+    ~/source_installs/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+)
+
+for plugin in "${manual_plugins[@]}"; do
+    source $plugin
+done
+
+# Rust language
+#source $HOME/.cargo/env
+
+# General
+set -o vi
+bindkey '   ' autosuggest-accept
+bindkey '^ ' autosuggest-execute
+bindkey -r '^J'
+export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$(yarn global bin):$PATH"
+# Speeds up key repeats using xset tool, needs to be installed separately
+xset r rate 200 30
+#bindkey -m vi-insert "\C-l":clear-screen
+
+# PATH variables
+path+=$HOME/.local/bin/
+path+=/$HOME/scriptconf/
+export EDITOR='nvim'
+export VISUAL='nvim'
+
+# Aliases
+alias weather='python /rpi2tb/joakim/coding_projects/python/fishing_data/weather/ilmatieteen_laitos.py'
+alias mpgn='mv ~/Downloads/*.pgn /rpi2tb/joakim/chess/db/joakim/'
+alias lynx='lynx --vikeys --display_charset=utf-8'
+alias clean_filenames='python $HOME/scripts/clean_filenames.py'
+alias c='xclip -selection clipboard'
+alias v='xclip -o'
+alias vim="nvim"
+alias vi="nvim"
+alias oldvim="vim"
+alias scripts="whence -pm '*' | grep scripts"
+alias ls="exa"
+alias lsl="exa -l"
+alias lslt="exa -l -snew"
+alias cat="bat"
+alias tree="tree -I '*.pyc'"
+function open () {
+    xdg-open "$*" &
+}
+
+alias luamake=/home/joakim/.config/nvim/lua-language-server/3rd/luamake/luamake
+
+timezsh() {
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do time $shell -i -c exit; done
+}
