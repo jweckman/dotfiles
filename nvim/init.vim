@@ -32,7 +32,7 @@ set clipboard+=unnamedplus
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 nnoremap <leader>cfd :cd %:p:h<CR>:pwd<CR>
-# Global statusline settings
+" Global statusline settings
 set laststatus=3
 highlight Winseparator guibg=None
 
