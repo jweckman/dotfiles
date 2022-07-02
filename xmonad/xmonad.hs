@@ -262,6 +262,7 @@ myManageHook = composeAll
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore 
     , className =? "hl_linux"       --> doFloat
+    , className =? "Yad"            --> doFloat
     --, className =? "Mindustry"      --> doFloat
     --, className =? "csgo_linux64"   --> doFloat
     ]
