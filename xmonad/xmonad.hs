@@ -263,6 +263,7 @@ myManageHook = composeAll
     , resource  =? "kdesktop"       --> doIgnore 
     , className =? "hl_linux"       --> doFloat
     , className =? "jwqtnotify"     --> doFloat
+    , className =? "Yad"            --> doFloat
     --, className =? "Mindustry"      --> doFloat
     --, className =? "csgo_linux64"   --> doFloat
     ]

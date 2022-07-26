@@ -32,9 +32,15 @@ set clipboard+=unnamedplus
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 nnoremap <leader>cfd :cd %:p:h<CR>:pwd<CR>
+" Global statusline settings
+set laststatus=3
+highlight Winseparator guibg=None
 
 " File type specific configs
-autocmd FileType xml setlocal expandtab
+autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType xml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype json setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
+autocmd Filetype yaml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 " Line diff configs. Allows for comparing the @a and @b register contents
 noremap <leader>ldt :Linediff<CR>
 noremap <leader>ldo :LinediffReset<CR>
@@ -125,7 +131,7 @@ nmap <leader>gm :Gdiffsplit!<CR>
 nnoremap <leader>lb :lua require('telescope.builtin').buffers{}<CR>
 nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR>
 nnoremap <leader>fd :lua require('telescope.builtin').find_files{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'} }<CR>
-nnoremap <leader>fg  :lua require("telescope").extensions.live_grep_raw.live_grep_raw() 
+nnoremap <leader>fg  :lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>
 nnoremap <leader>fgg :lua require('telescope.builtin').live_grep{search_dirs = {'%:h'}}<CR>
 nnoremap <leader>fgd :lua require('telescope.builtin').live_grep{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'}}<CR>
 nnoremap <leader>ll :lua require('telescope.builtin').buffers()<CR>
@@ -141,18 +147,18 @@ require "lsp_signature".setup()
 require'lspconfig'.lemminx.setup{
     cmd = { "/usr/bin/lemminx" };
 }
---require'lspconfig'.jedi_language_server.setup{}
-require'lspconfig'.pyright.setup{
-settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = false,
-          diagnosticMode = "workspace",
-          useLibraryCodeForTypes = true
-        }
-      }
-    }
-}
+require'lspconfig'.jedi_language_server.setup{}
+--require'lspconfig'.pyright.setup{
+--settings = {
+--      python = {
+--        analysis = {
+--          autoSearchPaths = false,
+--          diagnosticMode = "workspace",
+--          useLibraryCodeForTypes = true
+--        }
+--      }
+--    }
+--}
 require'lspconfig'.texlab.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.jsonls.setup {
@@ -173,44 +179,12 @@ require'lspconfig'.dockerls.setup {
   cmd = require'lspcontainers'.command('dockerls'),
 }
 
--- Telescope commonly used paths picker
-local actions = require "telescope.actions"
-local action_state = require "telescope.actions.state"
-local pickers = require "telescope.pickers"
-local finders = require "telescope.finders"
-local sorters = require "telescope.sorters"
-
-function enter(prompt_bufnr)
-    local selected = action_state.get_selected_entry()
-    vim.api.nvim_set_current_dir(selected[1])
-    --How to run general vim commans
-    --local cmd = 'cd ' .. selected[1]
-    --vim.cmd(cmd)
-    actions.close(prompt_bufnr)
-end
-
-local path_opts = {
-    finder = finders.new_table {
-        "/home/joakim",
-        "/home/joakim/code",
-    },
-    sorter = sorters.get_generic_fuzzy_sorter({}),
-
-    attach_mappings = function(prompt_bufnr, map)
-    map("n", "<CR>", enter)
-    map( "i", "<CR>", enter)
-    return true
-    end,
-}
-
-
-common_paths = pickers.new(path_opts)
-
 -- Telescope general setup
 require('telescope').setup{
   defaults = {
     layout_strategy = "horizontal",
     layout_config = {
+      width = 0.96,
       horizontal = {
         mirror = false,
       },
@@ -220,8 +194,11 @@ require('telescope').setup{
     },
     --border = {},
     --borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-    path_display = {'smart'}, --shorten
-  }
+    path_display = {
+        'truncate',
+        shorten = { len = 3, exclude = {1, -2, -1} }
+    },
+  },
 }
 
 require("telescope").load_extension "file_browser"
@@ -335,13 +312,13 @@ DAPATTACH.attach_python_debugger = function()
             },
             remote_root = '/home/joakim/data-pydebugdemo'
         },
-        ['/home/joakim/code/odoo15/odoo/src'] = {
+        ['/home/joakim/code/odoo15/odoo'] = {
             docker_service_name = 'odoo15', 
             adapter = {
                 host = nil,
                 port = '12345'
             },
-            remote_root = '/odoo/src'
+            remote_root = '/odoo'
         }
     }
     local config = nil
@@ -402,7 +379,7 @@ vim.api.nvim_set_keymap('n', '<leader>ds', "<cmd>lua local widgets=require'dap.u
 vim.api.nvim_set_keymap('n', '<leader>di', "<cmd>lua require'dap.ui.widgets'.hover()<CR>", opts)
 
 -- General keybindings
-vim.api.nvim_set_keymap('n', '<leader>cd', "<cmd>lua common_paths:find()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>cd', "<cmd>lua require'custom_pickers'.common_paths()<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>gg', "<cmd>Neogit<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>gl', "<cmd>Neogit log<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>gp', "<cmd>Neogit push<CR>", opts)
