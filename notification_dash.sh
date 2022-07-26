@@ -7,11 +7,12 @@ power_level="$(upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep per
 pl_arr=($power_level)
 pl_percentage=${pl_arr[1]}
 
-msg="${time}
-
-$dow
+msg="$dow
 $date
 Battery: $pl_percentage
 "
 
-notify-send "$msg"
+output="$time $msg"
+
+#notify-send "$time" "$msg"
+echo "$output"
