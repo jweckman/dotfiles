@@ -84,7 +84,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm , xK_q     ), kill)
 
     -- open custom notification dashboard
-    , ((modm , xK_s     ), spawn "~/scripts/notification_dash.sh")
+    , ((modm , xK_s     ), spawn "~/scripts/notification_dash.sh | python ~/scripts/jwqtnotify.py")
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
