@@ -94,6 +94,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-live-grep-args.nvim'
     Plug 'nvim-telescope/telescope-file-browser.nvim'
     Plug 'nvim-telescope/telescope-fzy-native.nvim'
     Plug 'nvim-telescope/telescope-rg.nvim'
@@ -123,6 +124,7 @@ nmap <leader>gs :Git<CR>
 nmap <leader>gh :diffget //2<CR>
 nmap <leader>gl :diffget //3<CR>
 nmap <leader>gm :Gdiffsplit!<CR>
+nmap <leader>gd :Git diff<CR>
 
 " Telescope configs
 
@@ -131,9 +133,7 @@ nmap <leader>gm :Gdiffsplit!<CR>
 nnoremap <leader>lb :lua require('telescope.builtin').buffers{}<CR>
 nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR>
 nnoremap <leader>fd :lua require('telescope.builtin').find_files{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'} }<CR>
-nnoremap <leader>fg  :lua require("telescope").extensions.live_grep_raw.live_grep_raw()<CR>
-nnoremap <leader>fgg :lua require('telescope.builtin').live_grep{search_dirs = {'%:h'}}<CR>
-nnoremap <leader>fgd :lua require('telescope.builtin').live_grep{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'}}<CR>
+nnoremap <leader>fg  :lua require("telescope").extensions.live_grep_args.live_grep_args()<CR>
 nnoremap <leader>ll :lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
