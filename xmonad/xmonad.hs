@@ -296,7 +296,6 @@ myLogHook = return ()
 -- By default, do nothing.
 myStartupHook = do
     spawnOnce "nitrogen --restore &"
-    spawnOnce "compton &"
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -311,7 +310,7 @@ main = xmonad defaults
 --
 -- No need to modify this.
 --
-defaults = ewmh def {
+defaults = ewmhFullscreen $ def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -329,7 +328,6 @@ defaults = ewmh def {
       -- hooks, layouts
         layoutHook         = myLayout,
         manageHook         = myManageHook,
-        handleEventHook    = handleEventHook def <+> XMonad.Hooks.EwmhDesktops.fullscreenEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
     }
