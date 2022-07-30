@@ -176,6 +176,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Screensaver
     , ((mod1Mask .|. shiftMask, xK_l), spawn "xscreensaver-command -lock")
 
+    -- Flamemeshot capture to Pictures folder
+    , ((modm              , xK_f     ), spawn "flameshot gui")
+
     ]
     ++
 
