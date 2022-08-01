@@ -37,6 +37,10 @@ zsh_add_file "zsh-exports"
 zsh_add_file "zsh-vim-mode"
 zsh_add_file "zsh-aliases"
 zsh_add_file "zsh-prompt"
+# Taken from "shell" folder in fzf source code. Can be smart to update now and then since heavily patched
+# Reason for adding here was not working on Fedora, can be removed if starts working properly on its own
+zsh_add_file "fzf-completion"
+zsh_add_file "fzf-key-bindings"
 
 # Plugins
 zsh_add_plugin "zsh-users/zsh-autosuggestions"
@@ -68,8 +72,7 @@ export PATH="$(yarn global bin):$PATH"
 # Speeds up key repeats using xset tool, needs to be installed separately
 xset r rate 200 30
 
-# FZF 
-# TODO update for mac
+# FZF
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
 [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh
