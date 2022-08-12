@@ -145,7 +145,7 @@ require "lsp_signature".setup()
 
 -- Languages setup
 require'lspconfig'.lemminx.setup{
-    cmd = { "/usr/bin/lemminx" };
+    cmd = { "/home/joakim/.local/bin/lemminx" };
 }
 require'lspconfig'.jedi_language_server.setup{}
 --require'lspconfig'.pyright.setup{
