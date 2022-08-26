@@ -166,9 +166,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((0                     , 0x1008ff13), spawn "amixer -q sset Master 2%+")
     , ((0                     , 0x1008ff12), spawn "amixer set Master toggle")
     -- alternative media keys for any keyboard 
-    , ((mod1Mask .|. controlMask, xK_period), spawn "amixer -q -D pulse sset Master 2%-")
-    , ((mod1Mask .|. controlMask, xK_comma), spawn "amixer  --q -D pulse sset Master 2%+")
-    , ((mod1Mask .|. controlMask, xK_m), spawn "amixer  -q -D pulse sset Master toggle")
+    -- OLD amixer conifgs
+    --, ((mod1Mask .|. controlMask, xK_period), spawn "amixer -q -D pulse sset Master 2%-")
+    --, ((mod1Mask .|. controlMask, xK_comma), spawn "amixer  --q -D pulse sset Master 2%+")
+    --, ((mod1Mask .|. controlMask, xK_m), spawn "amixer  -q -D pulse sset Master toggle")
+
+    -- pulsemixer configs, requires pulsemixer to be installed via pip
+    , ((mod1Mask .|. controlMask, xK_period), spawn "pulsemixer --change-volume -2")
+    , ((mod1Mask .|. controlMask, xK_comma), spawn "pulsemixer --change-volume +2")
+    , ((mod1Mask .|. controlMask, xK_m), spawn "pulsemixer --toggle-mute")
     -- pavucontrol sound cards and volume management
     , ((mod1Mask .|. controlMask, xK_p), spawn "pavucontrol --tab 3")
     -- Screenshot
