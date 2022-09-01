@@ -24,6 +24,7 @@ import XMonad.Layout.NoBorders
 -- certain contrib modules.
 --
 myTerminal      = "alacritty"
+userBinPath     = "/home/joakim/.local/bin/"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -172,9 +173,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --, ((mod1Mask .|. controlMask, xK_m), spawn "amixer  -q -D pulse sset Master toggle")
 
     -- pulsemixer configs, requires pulsemixer to be installed via pip
-    , ((mod1Mask .|. controlMask, xK_period), spawn "pulsemixer --change-volume -2")
-    , ((mod1Mask .|. controlMask, xK_comma), spawn "pulsemixer --change-volume +2")
-    , ((mod1Mask .|. controlMask, xK_m), spawn "pulsemixer --toggle-mute")
+    , ((mod1Mask .|. controlMask, xK_period), spawn (userBinPath ++ "pulsemixer --change-volume -2"))
+    , ((mod1Mask .|. controlMask, xK_comma), spawn (userBinPath ++ "pulsemixer --change-volume +2"))
+    , ((mod1Mask .|. controlMask, xK_m), spawn (userBinPath ++ "pulsemixer --toggle-mute"))
+
     -- pavucontrol sound cards and volume management
     , ((mod1Mask .|. controlMask, xK_p), spawn "pavucontrol --tab 3")
     -- Screenshot
