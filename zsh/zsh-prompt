@@ -34,7 +34,7 @@ zstyle ':vcs_info:git:*' formats " %{$fg[blue]%}(%{$fg[red]%}%m%u%c%{$fg[yellow]
 # format our main prompt for hostname current folder, and permissions.
 # PROMPT="%B%{$fg[blue]%}[%{$fg[white]%}%n%{$fg[red]%}@%{$fg[white]%}%m%{$fg[blue]%}] %(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ )%{$fg[cyan]%}%c%{$reset_color%}"
 
-PROMPT='[%*] %{$fg[cyan]%}%n%{$reset_color%}:%{$fg[green]%}%c%{$reset_color%} %(!.#.$) '
+PROMPT='[%*] %{$fg[cyan]%}%n%{$reset_color%}:%{$fg[yellow]%}%c%{$reset_color%} %(!.#.$) '
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" %{$fg[yellow]%}git:("
 ZSH_THEME_GIT_PROMPT_SUFFIX=")%{$reset_color%}"
