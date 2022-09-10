@@ -35,6 +35,7 @@ nnoremap <leader>cfd :cd %:p:h<CR>:pwd<CR>
 " Global statusline settings
 set laststatus=3
 highlight Winseparator guibg=None
+let g:airline_theme='minimalist'
 
 " File type specific configs
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
