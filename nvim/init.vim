@@ -87,6 +87,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'vimwiki/vimwiki'
     Plug 'numToStr/Comment.nvim'
     Plug 'theHamsta/nvim-dap-virtual-text'
+    Plug 'lambdalisue/nerdfont.vim'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'kyazdani42/nvim-web-devicons'
     " Git
     Plug 'tpope/vim-fugitive/'
     Plug 'emmanueltouzery/agitator.nvim'
