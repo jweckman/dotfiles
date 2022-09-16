@@ -386,6 +386,7 @@ vim.api.nvim_set_keymap('n', '<leader>cd', "<cmd>lua require'custom_pickers'.com
 vim.api.nvim_set_keymap('n', '<leader>gg', "<cmd>Neogit<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>gl', "<cmd>Neogit log<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>gp', "<cmd>Neogit push<CR>", opts)
+vim.api.nvim_set_keymap("n", "<Leader>fo", ":Telescope oldfiles<CR>", { noremap = true, silent = true })
 --vim.api.nvim_set_keymap('n', '<leader>gd', "<cmd>DiffviewOpen<CR>", opts)
 
 EOF
