@@ -42,33 +42,6 @@ autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 autocmd FileType xml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype json setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype yaml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
-" Line diff configs. Allows for comparing the @a and @b register contents
-noremap <leader>ldt :Linediff<CR>
-noremap <leader>ldo :LinediffReset<CR>
-
-let g:diffed_buffers = []
-
-function DiffText(a, b, diffed_buffers)
-    enew
-    setlocal buftype=nowrite
-    call add(a:diffed_buffers, bufnr('%'))
-    call setline(1, split(a:a, "\n"))
-    diffthis
-    vnew
-    setlocal buftype=nowrite
-    call add(a:diffed_buffers, bufnr('%'))
-    call setline(1, split(a:b, "\n"))
-    diffthis
-endfunction
-
-function WipeOutDiffs(diffed_buffers)
-    for buffer in a:diffed_buffers
-        execute 'bwipeout! ' . buffer
-    endfor
-endfunction
-
-nnoremap <leader>ldr :call DiffText(@a, @b, g:diffed_buffers)<CR>
-"nnoremap <leader>ldrr :call WipeOutDiffs(g:diffed_buffers) | let g:diffed_buffers=[]<CR>
 
 " auto-install vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -125,25 +98,7 @@ call plug#end()
 let g:vimwiki_list = [{'path': '/rpi2tb/joakim/documents/wiki', 'syntax': 'markdown'}]
 au FileType vimwiki setlocal shiftwidth=6 tabstop=6 noexpandtab
 
-" Vim fugitive
-nmap <leader>gs :Git<CR>
-nmap <leader>gh :diffget //2<CR>
-nmap <leader>gl :diffget //3<CR>
-nmap <leader>gm :Gdiffsplit!<CR>
-nmap <leader>gd :Git diff<CR>
 
-" Telescope configs
-
-" nnoremap <leader>fb :lua require('telescope.builtin').file_browser{}<CR>
-" nnoremap <leader>fbb :lua require('telescope.builtin').file_browser{cwd = '%:h'}<CR>
-nnoremap <leader>lb :lua require('telescope.builtin').buffers{}<CR>
-nnoremap <leader>ff :lua require('telescope.builtin').find_files{ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'} }<CR>
-nnoremap <leader>fd :lua require('telescope.builtin').find_files{search_dirs = {'/home/joakim/.config', '/home/joakim/scripts'} }<CR>
-nnoremap <leader>fg  :lua require("telescope").extensions.live_grep_args.live_grep_args()<CR>
-nnoremap <leader>ll :lua require('telescope.builtin').buffers()<CR>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-" LSP and Treesitter configs
 lua << EOF
 
 -- LSP signature plugin setup
@@ -154,17 +109,6 @@ require'lspconfig'.lemminx.setup{
     cmd = { "/home/joakim/.local/bin/lemminx" };
 }
 require'lspconfig'.jedi_language_server.setup{}
---require'lspconfig'.pyright.setup{
---settings = {
---      python = {
---        analysis = {
---          autoSearchPaths = false,
---          diagnosticMode = "workspace",
---          useLibraryCodeForTypes = true
---        }
---      }
---    }
---}
 require'lspconfig'.texlab.setup{}
 require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.jsonls.setup {
@@ -247,6 +191,13 @@ vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', op
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 vim.api.nvim_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+
+-- Telescope keymaps
+vim.api.nvim_set_keymap('n', '<leader>ll', "<cmd>lua require'telescope.builtin'.buffers()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>fd', "<cmd>lua require'telescope.builtin'.find_files({search_dirs={'/home/joakim/.config','/home/joakim/scripts'}})<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>ff', "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'}} )<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>fg', "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>fh', "<cmd>Telescope help_tags<CR>", opts)
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
@@ -389,10 +340,17 @@ vim.api.nvim_set_keymap('n', '<leader>cd', "<cmd>lua require'custom_pickers'.com
 vim.api.nvim_set_keymap('n', '<leader>gg', "<cmd>Neogit<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>gl', "<cmd>Neogit log<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader>gp', "<cmd>Neogit push<CR>", opts)
-vim.api.nvim_set_keymap("n", "<Leader>fo", ":Telescope oldfiles<CR>", { noremap = true, silent = true })
---vim.api.nvim_set_keymap('n', '<leader>gd', "<cmd>DiffviewOpen<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>fo", ":Telescope oldfiles<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>gD', "<cmd>DiffviewOpen<CR>", opts)
+vim.api.nvim_set_keymap('n', '<leader>cc', "<cmd>lua require'regdiff'.compare_clipboard()<CR>", opts)
+
+-- Vim fugitive
+vim.api.nvim_set_keymap("n", "<leader>gs", ":Git<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>gh", ":diffget //2<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>gh", ":diffget //3<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>gh", ":Gdiffsplit!<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>gd", ":Git diff<CR>", opts)
 
 EOF
 
 let g:dap_virtual_text = v:true
-
