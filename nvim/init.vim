@@ -1,47 +1,3 @@
-syntax on
-set nu rnu
-" Use below setting if no plugins are available. Allows vanilla fuzzy finding
-"set path +=**
-set wildmenu
-set noerrorbells
-set tabstop=4 softtabstop=4
-set shiftwidth=4
-set expandtab
-set smartindent
-set noswapfile
-set incsearch
-set ignorecase
-set updatetime=300
-set shortmess+=c
-"set foldmethod=syntax
-set lazyredraw
-set foldnestmax=10
-set nofoldenable
-set foldlevel=2
-let mapleader=","
-nnoremap gv <c-v>
-set hidden
-set list
-set listchars=tab:›\ ,trail:⋅
-nnoremap <C-L> :bnext<CR>
-nnoremap <C-H> :bprev<CR>
-map <leader>t :let $VIM_DIR=expand('%:p:h')<CR>:terminal<CR>cd $VIM_DIR<CR>
-" Try to prettify the builtin way
-map <leader>pp gg=G<C-o><C-o>
-set clipboard+=unnamedplus
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-nnoremap <leader>cfd :cd %:p:h<CR>:pwd<CR>
-" Global statusline settings
-set laststatus=3
-highlight Winseparator guibg=None
-let g:airline_theme='minimalist'
-
-" File type specific configs
-autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
-autocmd FileType xml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
-autocmd Filetype json setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
-autocmd Filetype yaml setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 " auto-install vim-plug
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
@@ -63,6 +19,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'lambdalisue/nerdfont.vim'
     Plug 'ryanoasis/vim-devicons'
     Plug 'kyazdani42/nvim-web-devicons'
+    " post install (yarn install | npm install) then load plugin only for editing supported files
+    Plug 'prettier/vim-prettier', {
+      \ 'do': 'yarn install --frozen-lockfile --production',
+      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
     " Git
     Plug 'tpope/vim-fugitive/'
     Plug 'emmanueltouzery/agitator.nvim'
@@ -94,12 +54,73 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
-" Vim Wiki
-let g:vimwiki_list = [{'path': '/rpi2tb/joakim/documents/wiki', 'syntax': 'markdown'}]
-au FileType vimwiki setlocal shiftwidth=6 tabstop=6 noexpandtab
-
-
 lua << EOF
+local opts = { noremap=true, silent=true }
+vim.g.mapleader = ","
+vim.opt.nu = true
+vim.opt.rnu = true
+vim.opt.wildmenu = true
+vim.opt.errorbells = false
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.swapfile = false
+vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.updatetime = 300
+vim.opt.shortmess:append("c")
+vim.opt.lazyredraw = true
+vim.opt.foldnestmax = 10
+vim.opt.foldenable = false
+vim.opt.foldlevel = 2
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()" 
+vim.opt.hidden = true
+vim.opt.list = true
+vim.opt.listchars = "tab:›  ,trail:⋅"
+vim.opt.laststatus = 3
+vim.opt.clipboard:append("unnamedplus")
+vim.api.nvim_set_keymap('n', 'gv', '<c-v>', opts)
+vim.api.nvim_set_keymap('n', '<C-L>', '<cmd>bprev<CR>', opts)
+vim.api.nvim_set_keymap('n', '<C-H>', '<cmd>bnext<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>t', '<cmd>tabnew | term<CR>', opts)
+vim.api.nvim_set_keymap('n', '<leader>pp', '<cmd>gg=G<C-o><C-o>', opts)
+vim.api.nvim_set_keymap('n', '<leader>cfd', '<cmd>cd %:p:h<CR><cmd>pwd<CR>', opts)
+vim.api.nvim_set_hl(0,"Winseparator", {bg = "None", default = true})
+vim.g.airline_theme = 'minimalist'
+
+-- Vim Wiki configs
+vim.g.vimwiki_list = {
+    {
+        path = '/rpi2tb/joakim/documents/wiki',
+        syntax = 'markdown',
+        ext = '.md',
+    }
+}
+
+-- File type specific autocommands
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"python"},
+  command = "setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4",
+})
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"xml"},
+  command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
+})
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"json"},
+  command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
+})
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"yaml"},
+  command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
+})
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"vimwiki"},
+  command = "setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4",
+})
 
 -- LSP signature plugin setup
 require "lsp_signature".setup()
@@ -169,7 +190,6 @@ require('dap-python').test_runner = 'pytest'
 
 
 -- LSP global keymaps
-local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
