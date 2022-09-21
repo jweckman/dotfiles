@@ -153,9 +153,18 @@ require'lspconfig'.dockerls.setup {
 -- Telescope general setup
 require('telescope').setup{
   defaults = {
+    mappings = {
+      i = {
+        -- map actions.which_key to <C-h> (default: <C-/>)
+        -- actions.which_key shows the mappings for your picker,
+        -- e.g. git_{create, delete, ...}_branch for the git_branches picker
+        ["<C-h>"] = "which_key"
+      }
+    },
     layout_strategy = "horizontal",
     layout_config = {
       width = 0.96,
+      preview_width = 0.57,
       horizontal = {
         mirror = false,
       },
