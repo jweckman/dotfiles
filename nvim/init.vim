@@ -55,7 +55,7 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 lua << EOF
-local opts = { noremap=true, silent=true }
+local opts = {silent=true }
 vim.g.mapleader = ","
 vim.opt.nu = true
 vim.opt.rnu = true
@@ -82,12 +82,12 @@ vim.opt.list = true
 vim.opt.listchars = "tab:›  ,trail:⋅"
 vim.opt.laststatus = 3
 vim.opt.clipboard:append("unnamedplus")
-vim.api.nvim_set_keymap('n', 'gv', '<c-v>', opts)
-vim.api.nvim_set_keymap('n', '<C-L>', '<cmd>bprev<CR>', opts)
-vim.api.nvim_set_keymap('n', '<C-H>', '<cmd>bnext<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>t', '<cmd>tabnew | term<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>pp', '<cmd>gg=G<C-o><C-o>', opts)
-vim.api.nvim_set_keymap('n', '<leader>cfd', '<cmd>cd %:p:h<CR><cmd>pwd<CR>', opts)
+vim.keymap.set('n', 'gv', '<c-v>', opts)
+vim.keymap.set('n', '<C-L>', '<cmd>bprev<CR>', opts)
+vim.keymap.set('n', '<C-H>', '<cmd>bnext<CR>', opts)
+vim.keymap.set('n', '<leader>t', '<cmd>tabnew | term<CR>', opts)
+vim.keymap.set('n', '<leader>pp', '<cmd>gg=G<C-o><C-o>', opts)
+vim.keymap.set('n', '<leader>cfd', '<cmd>cd %:p:h<CR><cmd>pwd<CR>', opts)
 vim.api.nvim_set_hl(0,"Winseparator", {bg = "None", default = true})
 vim.g.airline_theme = 'minimalist'
 
@@ -174,7 +174,7 @@ require('telescope').setup{
 
 require("telescope").load_extension "file_browser"
 
-vim.api.nvim_set_keymap(
+vim.keymap.set(
   "n",
   "<leader>fb",
   ":Telescope file_browser<CR>",
@@ -190,34 +190,34 @@ require('dap-python').test_runner = 'pytest'
 
 
 -- LSP global keymaps
-vim.api.nvim_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<leader>sh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+vim.keymap.set('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+vim.keymap.set('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+vim.keymap.set('n', '<leader>sh', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 
-vim.api.nvim_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-vim.api.nvim_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-vim.api.nvim_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+vim.keymap.set('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+vim.keymap.set('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+vim.keymap.set('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+vim.keymap.set('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+vim.keymap.set('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+vim.keymap.set('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+vim.keymap.set('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+vim.keymap.set('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+vim.keymap.set('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
 -- Telescope keymaps
-vim.api.nvim_set_keymap('n', '<leader>ll', "<cmd>lua require'telescope.builtin'.buffers()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>fd', "<cmd>lua require'telescope.builtin'.find_files({search_dirs={'/home/joakim/.config','/home/joakim/scripts'}})<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>ff', "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'}} )<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>fg', "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>fh', "<cmd>Telescope help_tags<CR>", opts)
+vim.keymap.set('n', '<leader>ll', "<cmd>lua require'telescope.builtin'.buffers()<CR>", opts)
+vim.keymap.set('n', '<leader>fd', "<cmd>lua require'telescope.builtin'.find_files({search_dirs={'/home/joakim/.config','/home/joakim/scripts'}})<CR>", opts)
+vim.keymap.set('n', '<leader>ff', "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'}} )<CR>", opts)
+vim.keymap.set('n', '<leader>fg', "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>", opts)
+vim.keymap.set('n', '<leader>fh', "<cmd>Telescope help_tags<CR>", opts)
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
@@ -379,35 +379,34 @@ vim.api.nvim_create_user_command("RegDiff", function(ctx)
 end, { bar = true, nargs = "*" })
 
 -- DAP keybindings
-vim.api.nvim_set_keymap('n', '<leader>da', "<cmd>lua DAPATTACH.attach_python_debugger()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>dc', "<cmd>lua require'dap'.continue()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>dov', "<cmd>lua require'dap'.step_over()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>dsi', "<cmd>lua require'dap'.step_into()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>dso', "<cmd>lua require'dap'.step_out()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>db', "<cmd>lua require'dap'.toggle_breakpoint()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>dsb', "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>dlp', "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>dr', "<cmd>lua require'dap'.repl_open()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>dl', "<cmd>lua require'dap'.run_last()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>ds', "<cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>di', "<cmd>lua require'dap.ui.widgets'.hover()<CR>", opts)
+vim.keymap.set('n', '<leader>da', "<cmd>lua DAPATTACH.attach_python_debugger()<CR>", opts)
+vim.keymap.set('n', '<leader>dc', "<cmd>lua require'dap'.continue()<CR>", opts)
+vim.keymap.set('n', '<leader>dov', "<cmd>lua require'dap'.step_over()<CR>", opts)
+vim.keymap.set('n', '<leader>dsi', "<cmd>lua require'dap'.step_into()<CR>", opts)
+vim.keymap.set('n', '<leader>dso', "<cmd>lua require'dap'.step_out()<CR>", opts)
+vim.keymap.set('n', '<leader>db', "<cmd>lua require'dap'.toggle_breakpoint()<CR>", opts)
+vim.keymap.set('n', '<leader>dsb', "<cmd>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", opts)
+vim.keymap.set('n', '<leader>dlp', "<cmd>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", opts)
+vim.keymap.set('n', '<leader>dr', "<cmd>lua require'dap'.repl_open()<CR>", opts)
+vim.keymap.set('n', '<leader>dl', "<cmd>lua require'dap'.run_last()<CR>", opts)
+vim.keymap.set('n', '<leader>ds', "<cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>", opts)
+vim.keymap.set('n', '<leader>di', "<cmd>lua require'dap.ui.widgets'.hover()<CR>", opts)
 
 -- General keybindings
-vim.api.nvim_set_keymap('n', '<leader>cd', "<cmd>lua require'custom_pickers'.common_paths()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>gg', "<cmd>Neogit<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>gl', "<cmd>Neogit log<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>gp', "<cmd>Neogit push<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>fo", ":Telescope oldfiles<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>gD', "<cmd>DiffviewOpen<CR>", opts)
--- vim.api.nvim_set_keymap('n', '<leader>cc', "<cmd>lua require'regdiff'.compare_clipboard()<CR>", opts)
-vim.api.nvim_set_keymap('n', '<leader>cc', ":RegDiff + a<CR>", opts)
+vim.keymap.set('n', '<leader>cd', "<cmd>lua require'custom_pickers'.common_paths()<CR>", opts)
+vim.keymap.set('n', '<leader>gg', "<cmd>Neogit<CR>", opts)
+vim.keymap.set('n', '<leader>gl', "<cmd>Neogit log<CR>", opts)
+vim.keymap.set('n', '<leader>gp', "<cmd>Neogit push<CR>", opts)
+vim.keymap.set("n", "<leader>fo", ":Telescope oldfiles<CR>", opts)
+vim.keymap.set('n', '<leader>gD', "<cmd>DiffviewOpen<CR>", opts)
+vim.keymap.set('n', '<leader>cc', "<Cmd>aboveleft vertical RegDiff + a<CR>", {silent = true})
 
 -- Vim fugitive
-vim.api.nvim_set_keymap("n", "<leader>gs", ":Git<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gh", ":diffget //2<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gh", ":diffget //3<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gh", ":Gdiffsplit!<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader>gd", ":Git diff<CR>", opts)
+vim.keymap.set("n", "<leader>gs", ":Git<CR>", opts)
+vim.keymap.set("n", "<leader>gh", ":diffget //2<CR>", opts)
+vim.keymap.set("n", "<leader>gh", ":diffget //3<CR>", opts)
+vim.keymap.set("n", "<leader>gh", ":Gdiffsplit!<CR>", opts)
+vim.keymap.set("n", "<leader>gd", ":Git diff<CR>", opts)
 
 EOF
 
