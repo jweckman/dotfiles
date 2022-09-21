@@ -227,6 +227,7 @@ vim.keymap.set('n', '<leader>fd', "<cmd>lua require'telescope.builtin'.find_file
 vim.keymap.set('n', '<leader>ff', "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!*.{xls,xlsx,pdf,rbql,po}'}} )<CR>", opts)
 vim.keymap.set('n', '<leader>fg', "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>", opts)
 vim.keymap.set('n', '<leader>fh', "<cmd>Telescope help_tags<CR>", opts)
+vim.keymap.set('n', '<leader>fr', "<cmd>lua require'telescope.builtin'.resume()<CR>", opts)
 
 -- Treesitter
 require'nvim-treesitter.configs'.setup {
