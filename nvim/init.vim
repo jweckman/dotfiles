@@ -403,6 +403,7 @@ vim.keymap.set('n', '<leader>dr', "<cmd>lua require'dap'.repl_open()<CR>", opts)
 vim.keymap.set('n', '<leader>dl', "<cmd>lua require'dap'.run_last()<CR>", opts)
 vim.keymap.set('n', '<leader>ds', "<cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>", opts)
 vim.keymap.set('n', '<leader>di', "<cmd>lua require'dap.ui.widgets'.hover()<CR>", opts)
+vim.g.dap_virtual_text = "v:true"
 
 -- General keybindings
 vim.keymap.set('n', '<leader>cd', "<cmd>lua require'custom_pickers'.common_paths()<CR>", opts)
@@ -420,5 +421,3 @@ vim.keymap.set("n", "<leader>gh", ":diffget //3<CR>", opts)
 vim.keymap.set("n", "<leader>gh", ":Gdiffsplit!<CR>", opts)
 
 EOF
-
-let g:dap_virtual_text = v:true
