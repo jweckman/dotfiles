@@ -20,9 +20,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'ryanoasis/vim-devicons'
     Plug 'kyazdani42/nvim-web-devicons'
     " post install (yarn install | npm install) then load plugin only for editing supported files
-    Plug 'prettier/vim-prettier', {
-      \ 'do': 'yarn install --frozen-lockfile --production',
-      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
+    "Plug 'prettier/vim-prettier', {
+    "  \ 'do': 'yarn install --frozen-lockfile --production',
+    "  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
     " Git
     Plug 'tpope/vim-fugitive/'
     Plug 'emmanueltouzery/agitator.nvim'
@@ -90,6 +90,12 @@ vim.keymap.set('n', '<leader>pp', '<cmd>gg=G<C-o><C-o>', opts)
 vim.keymap.set('n', '<leader>cfd', '<cmd>cd %:p:h<CR><cmd>pwd<CR>', opts)
 vim.api.nvim_set_hl(0,"Winseparator", {bg = "None", default = true})
 vim.g.airline_theme = 'minimalist'
+vim.opt.termguicolors = true
+-- Backgroun and foreground colors
+vim.api.nvim_set_hl(0, "FloatBorder", {bg="#161b1d", fg="#7ea2b4"})
+vim.api.nvim_set_hl(0, "NormalFloat", {bg="#161b1d"})
+vim.api.nvim_set_hl(0, "TelescopeNormal", {bg="#161b1d"})
+vim.api.nvim_set_hl(0, "TelescopeBorder", {bg="#161b1d"})
 
 -- Vim Wiki configs
 vim.g.vimwiki_list = {
@@ -121,6 +127,18 @@ vim.api.nvim_create_autocmd({ "FileType"}, {
   pattern = {"vimwiki"},
   command = "setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4",
 })
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"vue"},
+  command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
+})
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"javascript"},
+  command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
+})
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"typescript"},
+  command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
+})
 
 -- LSP signature plugin setup
 require "lsp_signature".setup()
@@ -148,6 +166,8 @@ require'lspconfig'.dockerls.setup {
     params.processId = vim.NIL
   end,
   cmd = require'lspcontainers'.command('dockerls'),
+}
+require'lspconfig'.vuels.setup {
 }
 
 -- Telescope general setup
@@ -219,7 +239,7 @@ vim.keymap.set('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts
 vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 vim.keymap.set('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+vim.keymap.set('n', '<space>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
 
 -- Telescope keymaps
 vim.keymap.set('n', '<leader>ll', "<cmd>lua require'telescope.builtin'.buffers()<CR>", opts)
@@ -248,6 +268,7 @@ require'nvim-treesitter.configs'.setup {
     "yaml",
     "html",
     "javascript",
+    "vue",
   },
 }
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
