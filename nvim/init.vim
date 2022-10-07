@@ -19,6 +19,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'lambdalisue/nerdfont.vim'
     Plug 'ryanoasis/vim-devicons'
     Plug 'kyazdani42/nvim-web-devicons'
+    Plug 'LunarVim/Colorschemes'
     " post install (yarn install | npm install) then load plugin only for editing supported files
     "Plug 'prettier/vim-prettier', {
     "  \ 'do': 'yarn install --frozen-lockfile --production',
@@ -91,7 +92,7 @@ vim.keymap.set('n', '<leader>cfd', '<cmd>cd %:p:h<CR><cmd>pwd<CR>', opts)
 vim.api.nvim_set_hl(0,"Winseparator", {bg = "None", default = true})
 vim.g.airline_theme = 'minimalist'
 vim.opt.termguicolors = true
--- Backgroun and foreground colors
+-- Background and foreground colors
 vim.api.nvim_set_hl(0, "FloatBorder", {bg="#161b1d", fg="#7ea2b4"})
 vim.api.nvim_set_hl(0, "NormalFloat", {bg="#161b1d"})
 vim.api.nvim_set_hl(0, "TelescopeNormal", {bg="#161b1d"})
@@ -105,6 +106,8 @@ vim.g.vimwiki_list = {
         ext = '.md',
     }
 }
+
+require('colorscheme')
 
 -- File type specific autocommands
 vim.api.nvim_create_autocmd({ "FileType"}, {
