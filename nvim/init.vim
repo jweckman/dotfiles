@@ -100,7 +100,7 @@ vim.api.nvim_set_hl(0, "TelescopeBorder", {bg="#161b1d"})
 -- Vim Wiki configs
 vim.g.vimwiki_list = {
     {
-        path = '/rpi2tb/joakim/documents/wiki',
+        path = '/home/joakim/wiki/',
         syntax = 'markdown',
         ext = '.md',
     }
