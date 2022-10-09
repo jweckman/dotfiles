@@ -107,6 +107,14 @@ vim.g.vimwiki_list = {
     }
 }
 
+-- General autocommands
+
+-- Set csv file to csv_semicolon for RainbowCsv highlighting. Use RainbowDelim to set manually to something else
+vim.api.nvim_create_autocmd({"FileType"}, {
+  pattern = {"csv"},
+  command = "set filetype=csv_semicolon",
+})
+
 require('colorscheme')
 
 -- File type specific autocommands
