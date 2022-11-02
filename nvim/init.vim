@@ -20,6 +20,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'ryanoasis/vim-devicons'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'LunarVim/Colorschemes'
+    Plug 'lewis6991/impatient.nvim'
     " post install (yarn install | npm install) then load plugin only for editing supported files
     "Plug 'prettier/vim-prettier', {
     "  \ 'do': 'yarn install --frozen-lockfile --production',
@@ -116,6 +117,7 @@ vim.api.nvim_create_autocmd({"FileType"}, {
 })
 
 require('colorscheme')
+require('impatient')
 
 -- File type specific autocommands
 vim.api.nvim_create_autocmd({ "FileType"}, {
