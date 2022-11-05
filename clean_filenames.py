@@ -1,8 +1,6 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 from pathlib import Path
-import sys
-
-''' Clean up unwanted characters from filenames in a directory. WARNING: RECURSIVE!'''
+''' Clean up unwanted characters from filenames and directories in a directory. WARNING: RECURSIVE!'''
 
 def clean_name(p):
     base = p.parent
@@ -13,8 +11,7 @@ def clean_name(p):
     return base / new_name
 
 if __name__ == '__main__':
-    for line in sys.stdin:
-        folder = Path(line.rstrip())
-        for p in folder.rglob("*"):
-            new = clean_name(p)
-            p.rename(new)
+    folder = Path().cwd()
+    for p in folder.rglob("*"):
+        new = clean_name(p)
+        p.rename(new)
