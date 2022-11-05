@@ -21,6 +21,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'LunarVim/Colorschemes'
     Plug 'lewis6991/impatient.nvim'
+    Plug 'ThePrimeagen/vim-be-good'
     " post install (yarn install | npm install) then load plugin only for editing supported files
     "Plug 'prettier/vim-prettier', {
     "  \ 'do': 'yarn install --frozen-lockfile --production',
