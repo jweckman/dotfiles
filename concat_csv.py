@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import pandas as pd
 from pathlib import Path
 import sys
