@@ -37,10 +37,10 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     style = """
         QWidget{
-            background: #262D37;
+            background: #212121;
         }
         QLabel{
-            color: #fff;
+            color: #EEEEEE;
         }
         QLineEdit {
                 padding 1px;
