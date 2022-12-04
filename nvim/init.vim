@@ -94,11 +94,6 @@ vim.keymap.set('n', '<leader>cfd', '<cmd>cd %:p:h<CR><cmd>pwd<CR>', opts)
 vim.api.nvim_set_hl(0,"Winseparator", {bg = "None", default = true})
 vim.g.airline_theme = 'minimalist'
 vim.opt.termguicolors = true
--- Background and foreground colors
-vim.api.nvim_set_hl(0, "FloatBorder", {bg="#161b1d", fg="#7ea2b4"})
-vim.api.nvim_set_hl(0, "NormalFloat", {bg="#161b1d"})
-vim.api.nvim_set_hl(0, "TelescopeNormal", {bg="#161b1d"})
-vim.api.nvim_set_hl(0, "TelescopeBorder", {bg="#161b1d"})
 
 -- Vim Wiki configs
 vim.g.vimwiki_list = {
