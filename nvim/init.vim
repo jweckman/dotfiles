@@ -91,6 +91,8 @@ vim.keymap.set('n', '<C-H>', '<cmd>bnext<CR>', opts)
 vim.keymap.set('n', '<leader>t', '<cmd>tabnew | term<CR>', opts)
 vim.keymap.set('n', '<leader>pp', '<cmd>gg=G<C-o><C-o>', opts)
 vim.keymap.set('n', '<leader>cfd', '<cmd>cd %:p:h<CR><cmd>pwd<CR>', opts)
+vim.keymap.set('n', '<C-d>', '<C-d>zz', opts)
+vim.keymap.set('n', '<C-u>', '<C-u>zz', opts)
 vim.api.nvim_set_hl(0,"Winseparator", {bg = "None", default = true})
 vim.g.airline_theme = 'minimalist'
 vim.opt.termguicolors = true
