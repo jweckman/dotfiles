@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 import pandas as pd
 from sys import argv
+import re
 from pathlib import Path
 from typing import List
+import warnings
 
 # File detection functions
 def read_table_file(f: Path) -> pd.DataFrame | None:
@@ -78,14 +80,21 @@ def get_col_analysis_candidates(s: pd.Series) -> list:
     if 'datetime64' in str(s.dtype):
         candidates.append('numeric_cron_date')
     if s.dtype in [int, float]:
-        candidates.append('numeric')
-        candidates.append('basic_stats')
+        if _detect_year_col(s):
+            candidates.append('year')
+        else:
+            candidates.append('numeric')
+            candidates.append('basic_stats')
     if s.dtype == 'object':
-        # print(f"OBJECT: {s.name}")
         candidates.append('grouper')
         candidates.append('value_counts')
 
     return candidates
+
+def _detect_year_col(series: pd.Series) -> bool:
+    if all(series.dropna().between(1900, 2100)):
+        return True
+    return False
 
 # Analysis functions
 def column_level_overview_text(
@@ -93,12 +102,14 @@ def column_level_overview_text(
             analysis_candidates: dict[str, list]
         ) -> None:
     for i, col in enumerate(df.columns):
-        print(f"SUMMARY FOR COLUMN: {col}, index: {i}")
+        print(f"SUMMARY FOR COLUMN: {col}, index: {i} [{df[col].dtype}]")
         if all(df[col].isna()):
             print("Column is completely empty")
             print("--------------------------------------------")
             break
         candidates = analysis_candidates[col]
+        if 'year' in candidates:
+            print(f"Contains years between: {df[col].min()} - {df[col].max()}")
         if 'numeric_cron_date' in candidates:
             print(f"Date range: {df[col].dt.date.min()} - {df[col].dt.date.max()}")
         elif 'basic_stats' in candidates and 'numeric' in candidates:
