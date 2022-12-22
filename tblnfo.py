@@ -35,7 +35,7 @@ def read_table_file(f: Path | TextIO) -> pd.DataFrame:
                 df = pd.read_excel(f)
     else:
         df = read_csv_file(f)
-    if not df:
+    if not isinstance(df, pd.DataFrame):
         raise ValueError(
             "Passed file could not be matched as a csv or MS excel file"
         )
@@ -132,6 +132,11 @@ def _detect_year_col(series: pd.Series) -> bool:
     return False
 
 # Analysis functions
+
+def _col_nan_percentage(s: pd.Series) -> float | None:
+    if len(s) > 0:
+        return s.isna().tolist().count(True) / len(s)
+
 def column_level_overview_text(
             df: pd.DataFrame,
             analysis_candidates: dict[str, list]
@@ -142,6 +147,11 @@ def column_level_overview_text(
             print("Column is completely empty")
             print("--------------------------------------------")
             break
+        nan_percentage = _col_nan_percentage(df[col]) * 100
+        if nan_percentage:
+            print(f"NaN percentage: {nan_percentage:.4f} %")
+        else:
+            print(f"No NaN values")
         candidates = analysis_candidates[col]
         if 'year' in candidates:
             print(f"Contains years between: {df[col].min()} - {df[col].max()}")
