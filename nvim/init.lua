@@ -245,6 +245,14 @@ vim.api.nvim_create_autocmd({ "FileType"}, {
   pattern = {"lua"},
   command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
 })
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"toml"},
+  command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
+})
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"vim"},
+  command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
+})
 
 -- Plugin initialization
 
