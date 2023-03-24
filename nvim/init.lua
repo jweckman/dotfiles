@@ -350,6 +350,7 @@ vim.keymap.set('n', '<leader>fo', require('telescope.builtin').oldfiles, { desc 
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = {
+    'bash',
     'lua',
     'python',
     'rust',
@@ -482,6 +483,7 @@ require('mason').setup()
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
 local servers = {
   'rust_analyzer',
+  'bashls',
   'jedi_language_server',
   'tsserver',
   'lua_ls',
