@@ -355,7 +355,6 @@ require('nvim-treesitter.configs').setup {
     'python',
     'rust',
     'typescript',
-    'help',
     'json',
     'yaml',
     'html',
