@@ -54,7 +54,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = ["1","2","3","4","5","6","7","8","9", "0"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -64,28 +64,29 @@ myFocusedBorderColor = "#1f8fff"
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
 --
+--
+moveCurrentWindowAndFocusIt :: WorkspaceId -> X ()
+moveCurrentWindowAndFocusIt wid = windows $ W.view wid . W.shift wid
+
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "dmenu_run")
+    , ((modm,               xK_f     ), spawn "dmenu_run")
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
 
     -- launch terminal
-    , ((modm , xK_t     ), spawn myTerminal)
-
-    -- launch terminal
     , ((modm , xK_Return   ), spawn myTerminal)
 
     -- close focused window
-    , ((modm , xK_q     ), kill)
+    , ((modm , xK_Escape     ), kill)
 
     -- open custom notification dashboard
-    , ((modm , xK_s     ), spawn "~/scripts/notification_dash.sh | python ~/scripts/jwqtnotify.py")
+    , ((modm , xK_f     ), spawn "~/scripts/notification_dash.sh | python ~/scripts/jwqtnotify.py")
 
      -- Rotate through the available layout algorithms
     , ((modm,               xK_space ), sendMessage NextLayout)
@@ -109,7 +110,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_m     ), windows W.focusMaster  )
 
     -- Swap the focused window and the master window
-    , ((modm,               xK_u), windows W.swapMaster)
+    -- , ((modm,               xK_u), windows W.swapMaster)
 
     -- Swap the focused window with the next window
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
@@ -124,7 +125,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_l     ), sendMessage Expand)
 
     -- Push window back into tiling
-    , ((modm,               xK_o     ), withFocused $ windows . W.sink)
+    , ((modm,               xK_h     ), withFocused $ windows . W.sink)
 
     -- Increment the number of windows in the master area
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
@@ -139,27 +140,53 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- Quit xmonad
-    , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    , ((modm .|. shiftMask, xK_Escape     ), io (exitWith ExitSuccess))
 
     -- Restart xmonad
-    , ((modm              , xK_r     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((modm              , xK_b     ), spawn "xmonad --recompile; xmonad --restart")
 
     -- Run xmessage with a summary of the default keybindings (useful for beginners)
     , ((modm .|. shiftMask, xK_slash ), spawn ("echo \"" ++ help ++ "\" | xmessage -file -"))
 
     -- USERCONFIG
-    -- a basic CycleWS setup
+    --
 
-    , ((modm,               xK_x),  nextWS)
-    , ((modm,               xK_z),    prevWS)
-    , ((modm .|. shiftMask, xK_x),  shiftToNext)
-    , ((modm .|. shiftMask, xK_z),    shiftToPrev)
+    , ((modm, xK_q), windows $ W.greedyView "1")
+    -- -- , ((shiftMask .|. modm, xK_q), windows $ W.shift "1")
+    -- , ((shiftMask .|. modm, xK_q), windows $ )
+    -- -- , ((shiftMask .|. modm, xK_q), windows $ W.shift "1")
+    -- , ((modm .|. shiftMask, xK_q), windows $ W.shift "1")
+    , ((modm .|. shiftMask, xK_q), windows $ W.greedyView "1" . W.shift "1")
+    , ((modm, xK_w), windows $ W.greedyView "2")
+    , ((modm .|. shiftMask, xK_w), windows $ W.greedyView "2" . W.shift "2")
+    , ((modm, xK_e), windows $ W.greedyView "3")
+    , ((modm .|. shiftMask, xK_e), windows $ W.greedyView "3" . W.shift "3")
+    , ((modm, xK_r), windows $ W.greedyView "4")
+    , ((modm .|. shiftMask, xK_r), windows $ W.greedyView "4" . W.shift "4")
+    , ((modm, xK_t), windows $ W.greedyView "5")
+    , ((modm .|. shiftMask, xK_t), windows $ W.greedyView "5" . W.shift "5")
+    , ((modm, xK_y), windows $ W.greedyView "6")
+    , ((modm .|. shiftMask, xK_y), windows $ W.greedyView "6" . W.shift "6")
+    , ((modm, xK_u), windows $ W.greedyView "7")
+    , ((modm .|. shiftMask, xK_u), windows $ W.greedyView "7" . W.shift "7")
+    , ((modm, xK_i), windows $ W.greedyView "8")
+    , ((modm .|. shiftMask, xK_i), windows $ W.greedyView "8" . W.shift "8")
+    , ((modm, xK_o), windows $ W.greedyView "9")
+    , ((modm .|. shiftMask, xK_o), windows $ W.greedyView "9" . W.shift "9")
+    , ((modm, xK_p), windows $ W.greedyView "0")
+    , ((modm .|. shiftMask, xK_p), windows $ W.greedyView "0" . W.shift "0")
+
+    -- a basic CycleWS setup
+    -- , ((modm,               xK_x),  nextWS)
+    -- , ((modm,               xK_z),    prevWS)
+    -- , ((modm .|. shiftMask, xK_x),  shiftToNext)
+    -- , ((modm .|. shiftMask, xK_z),    shiftToPrev)
     , ((modm,               xK_Right), nextScreen)
     , ((modm,               xK_Left),  prevScreen)
     , ((modm .|. shiftMask, xK_Right), shiftNextScreen)
     , ((modm .|. shiftMask, xK_Left),  shiftPrevScreen)
-    , ((modm .|. shiftMask, xK_x), shiftToNext >> nextWS)
-    , ((modm .|. shiftMask, xK_z),   shiftToPrev >> prevWS)
+    -- , ((modm .|. shiftMask, xK_x), shiftToNext >> nextWS)
+    -- , ((modm .|. shiftMask, xK_z),   shiftToPrev >> prevWS)
 
     -- Media Keys TODO: implement notify-send
     -- media keys for home cherry keyboard
@@ -185,10 +212,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((mod1Mask .|. shiftMask, xK_l), spawn "xscreensaver-command -lock")
 
     -- Flamemeshot capture to Pictures folder
-    , ((modm              , xK_f     ), spawn "flameshot gui")
+    , ((modm              , xK_s     ), spawn "flameshot gui")
 
     ]
     ++
+
+    -- CUSTOM ATTEMPT AT MOVE WINDOW AND FOCUS - NOT WORKING
+    -- [ ( (modm .|. shiftMask, key), screenWorkspace sc >>= flip whenJust moveCurrentWindowAndFocusIt  )
+    --    | (key, sc) <- zip [xK_q, xK_w, xK_e, xK_r, xK_t, xK_y, xK_u, xK_i, xK_o, xK_p] [0..] 
+    -- ]
 
     --
     -- mod-[1..9], Switch to workspace N
@@ -206,6 +238,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [((m .|. modm .|. controlMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
         | (key, sc) <- zip [xK_z, xK_x, xK_c] [0..]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+    -- [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+    -- | (key, sc) <- zip [xK_q, xK_w, xK_e, xK_r, xK_t, xK_y, xK_u, xK_i, xK_o, xK_p] [0..]
+    -- , let shiftAndView i = W.view i . W.shift i
+    -- , (f, m) <- [(W.view, 0), (shiftAndView, shiftMask)]]
 
 
 ------------------------------------------------------------------------
