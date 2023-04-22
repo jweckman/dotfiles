@@ -651,24 +651,7 @@ DAPATTACH = {}
 
 DAPATTACH.attach_python_debugger = function()
     local docker_service_ips = get_docker_service_ips()
-    local adapter_config = {
-        ['/home/joakim/code/docker-debug-python'] = {
-            docker_service_name_substr = 'debug-python', 
-            adapter = {
-                host = nil,
-                port = '12345'
-            },
-            remote_root = '/home/joakim/data-pydebugdemo'
-        },
-        ['/home/joakim/code/demo16/odoo/src'] = {
-            docker_service_name_substr = 'odoo16', 
-            adapter = {
-                host = nil,
-                port = '12345'
-            },
-            remote_root = '/odoo/src'
-        }
-    }
+    local adapter_config = require('debugpy_config')
     local config = nil
     for candidate_parent, conf in pairs(adapter_config) do
         patternized_cp = string.gsub(candidate_parent, '-', '.')
