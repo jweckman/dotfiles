@@ -70,7 +70,10 @@ bindkey -r '^J'
 export PATH="$HOME/.poetry/bin:$PATH"
 export PATH="$(yarn global bin):$PATH"
 # Speeds up key repeats using xset tool, needs to be installed separately
-xset r rate 200 30
+if [ $XDG_SESSION_TYPE = "x11" ]; then
+    xset r rate 200 30
+    setxkbmap -option caps:escape
+fi
 
 # FZF
 [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
@@ -86,23 +89,12 @@ compinit
 autoload edit-command-line; zle -N edit-command-line
 # bindkey '^e' edit-command-line
 
-# TODO Remove these
-setxkbmap -option caps:escape
-xset r rate 210 40
-
-# Speedy keys
-xset r rate 210 40
 
 # Environment variables set everywhere
 export EDITOR="nvim"
 export TERMINAL="alacritty"
-export BROWSER="brave"
+export BROWSER="firefox"
 
 # For QT Themes
 export QT_QPA_PLATFORMTHEME=qt5ct
-
-# remap caps to escape
-setxkbmap -option caps:escape
-# swap escape and caps
-# setxkbmap -option caps:swapescape
 
