@@ -203,7 +203,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set('n', 'gv', '<c-v>', opts)
 vim.keymap.set('n', '<C-L>', '<cmd>bprev<CR>', opts)
 vim.keymap.set('n', '<C-H>', '<cmd>bnext<CR>', opts)
-vim.keymap.set('n', '<leader>t', '<cmd>tabnew | term<CR>', opts)
+vim.keymap.set('n', '<leader><CR>', '<cmd>tabnew | term<CR>', opts)
 vim.keymap.set('n', '<leader>pp', '<cmd>gg=G<C-o><C-o>', opts)
 vim.keymap.set('n', '<leader>cfd', '<cmd>cd %:p:h<CR><cmd>pwd<CR>', opts)
 vim.keymap.set('n', '<C-d>', '<C-d>zz', opts)
@@ -750,9 +750,9 @@ vim.keymap.set('n', '<leader>di', "<cmd>lua require'dap.ui.widgets'.hover()<CR>"
 vim.g.dap_virtual_text = "v:true"
 
 -- Testing related keybindings
-vim.keymap.set('n', '<leader>tpr', "<cmd>lua require'neotest'.run.run()<CR>", opts)
-vim.keymap.set('n', '<leader>tpd', "<cmd>lua require'neotest'.run.run({strategy = 'dap'})<CR>", opts)
-vim.keymap.set('n', '<leader>tpa', "<cmd>lua require'neotest'.run.run(vim.fn.expand('%'))<CR>", opts)
+vim.keymap.set('n', '<leader>tr', "<cmd>lua require'neotest'.run.run()<CR>", opts)
+vim.keymap.set('n', '<leader>td', "<cmd>lua require'neotest'.run.run({strategy = 'dap'})<CR>", opts)
+vim.keymap.set('n', '<leader>ta', "<cmd>lua require'neotest'.run.run(vim.fn.expand('%'))<CR>", opts)
 
 -- Vim fugitive
 vim.keymap.set("n", "<leader>gs", ":Git<CR>", opts)
