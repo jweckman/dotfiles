@@ -698,6 +698,7 @@ DAPATTACH.attach_python_debugger = function()
                 remoteRoot = config['remote_root']; -- Wherever your Python code lives in the container.
             };
         };
+        justMyCode = false;
     }
     local session = dap.attach(adapter, pythonAttachConfig)
     if session == nil then
