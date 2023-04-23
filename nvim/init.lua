@@ -99,6 +99,19 @@ require('packer').startup(function(use)
   -- General
   use('mechatroner/rainbow_csv')
   use('tpope/vim-surround')
+  -- Testing
+  use('nvim-neotest/neotest-python')
+  use('nvim-neotest/neotest-plenary')
+  use('nvim-neotest/neotest-vim-test')
+  use {
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim"
+    }
+  }
+
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -324,6 +337,18 @@ require('telescope').setup{
     },
   },
 }
+
+require("neotest").setup({
+  adapters = {
+    require("neotest-python")({
+      dap = { justMyCode = false },
+    }),
+    require("neotest-plenary"),
+    require("neotest-vim-test")({
+      ignore_file_types = { "python", "vim", "lua" },
+    }),
+  },
+})
 
 require("telescope").load_extension "file_browser"
 
@@ -723,6 +748,11 @@ vim.keymap.set('n', '<leader>dl', "<cmd>lua require'dap'.run_last()<CR>", opts)
 vim.keymap.set('n', '<leader>ds', "<cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>", opts)
 vim.keymap.set('n', '<leader>di', "<cmd>lua require'dap.ui.widgets'.hover()<CR>", opts)
 vim.g.dap_virtual_text = "v:true"
+
+-- Testing related keybindings
+vim.keymap.set('n', '<leader>tpr', "<cmd>lua require'neotest'.run.run()<CR>", opts)
+vim.keymap.set('n', '<leader>tpd', "<cmd>lua require'neotest'.run.run({strategy = 'dap'})<CR>", opts)
+vim.keymap.set('n', '<leader>tpa', "<cmd>lua require'neotest'.run.run(vim.fn.expand('%'))<CR>", opts)
 
 -- Vim fugitive
 vim.keymap.set("n", "<leader>gs", ":Git<CR>", opts)
