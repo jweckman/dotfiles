@@ -746,6 +746,7 @@ vim.keymap.set('n', '<leader>dlp', "<cmd>lua require'dap'.set_breakpoint(nil, ni
 vim.keymap.set('n', '<leader>dr', "<cmd>lua require'dap'.repl_open()<CR>", opts)
 vim.keymap.set('n', '<leader>dl', "<cmd>lua require'dap'.run_last()<CR>", opts)
 vim.keymap.set('n', '<leader>ds', "<cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>", opts)
+vim.keymap.set('n', '<leader>df', "<cmd>lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.frames)<CR>", opts)
 vim.keymap.set('n', '<leader>di', "<cmd>lua require'dap.ui.widgets'.hover()<CR>", opts)
 vim.g.dap_virtual_text = "v:true"
 
