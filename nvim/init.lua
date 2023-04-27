@@ -354,8 +354,8 @@ require("neotest").setup({
 require("telescope").load_extension "file_browser"
 
 
--- Enable telescope fzf native, if installed
-pcall(require('telescope').load_extension, 'fzf')
+-- Enable telescope fzy native, if installed
+pcall(require('telescope').load_extension, 'fzy')
 
 -- Telescope keymaps
 vim.keymap.set("n", "<leader>fb", ":Telescope file_browser<CR>", { noremap = true })
