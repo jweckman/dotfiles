@@ -72,8 +72,6 @@ require('packer').startup(function(use)
   use("nvim-lua/plenary.nvim")
   use("nvim-telescope/telescope-live-grep-args.nvim")
   use("nvim-telescope/telescope-file-browser.nvim")
-  use("nvim-telescope/telescope-fzy-native.nvim")
-  use("nvim-telescope/telescope-rg.nvim")
   use("nvim-telescope/telescope-dap.nvim")
   -- Treesitter
   use("nvim-treesitter/playground")
