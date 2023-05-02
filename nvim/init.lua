@@ -684,6 +684,7 @@ DAPATTACH.attach_python_debugger = function()
     local is_substr = string.match(vim.fn.getcwd(), patternized_cp)
     if is_substr ~= nil then
       config = conf
+      config['local_root'] = candidate_parent
       break
     end
   end
@@ -708,7 +709,7 @@ DAPATTACH.attach_python_debugger = function()
     host = adapter;
     port = tonumber(adapter['port']);
   }
-  pythonAttachConfig = {
+  local pythonAttachConfig = {
     type = "python";
     request = "attach";
     connect = {
@@ -720,7 +721,7 @@ DAPATTACH.attach_python_debugger = function()
     cwd = vim.fn.getcwd();
     pathMappings = {
       {
-        localRoot = vim.fn.getcwd(); -- Wherever your Python code lives locally.
+        localRoot = config['local_root']; -- Wherever your Python code lives locally.
         remoteRoot = config['remote_root']; -- Wherever your Python code lives in the container.
       };
     };
