@@ -70,6 +70,13 @@ require('packer').startup(function(use)
   -- })
   -- LSP
   use("ray-x/lsp_signature.nvim")
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+      require("null-ls").setup()
+    end,
+    requires = { "nvim-lua/plenary.nvim" },
+  })
   -- Telescope
   use("nvim-lua/popup.nvim")
   use("nvim-lua/plenary.nvim")
@@ -274,6 +281,19 @@ vim.api.nvim_create_autocmd({ "FileType"}, {
 -- PERSONAL
 
 require "lsp_signature".setup()
+
+local null_ls = require('null-ls')
+
+null_ls.setup({
+  sources = {
+    null_ls.builtins.diagnostics.mypy,
+    null_ls.builtins.diagnostics.ruff.with({
+      extra_args = {
+        '--ignore E501',
+      }
+    }),
+  },
+})
 
 -- DEFAULT KICKSTART INITIALIZATIONS
 -- Set lualine as statusline
