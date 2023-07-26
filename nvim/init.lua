@@ -107,6 +107,8 @@ require('packer').startup(function(use)
   -- General
   use('mechatroner/rainbow_csv')
   use('tpope/vim-surround')
+  -- Programming languages
+  use('edgedb/edgedb-vim')
   -- Testing
   use('nvim-neotest/neotest-python')
   use('nvim-neotest/neotest-plenary')
