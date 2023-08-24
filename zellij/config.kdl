@@ -148,6 +148,7 @@ keybinds {
         bind "Alt i" { SwitchToMode "Tab"; }
     }
     shared_except "move" "locked" {
+        unbind "Ctrl h"
         bind "Alt u" { SwitchToMode "Move"; }
     }
     shared_except "tmux" "locked" {
