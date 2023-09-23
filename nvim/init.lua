@@ -389,6 +389,7 @@ vim.keymap.set("n", "<leader>fb", ":Telescope file_browser<CR>", { noremap = tru
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>ff', require('telescope.builtin').find_files, { desc = '[F]ind [F]iles'})
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[F]ind [H]elp' })
+vim.keymap.set('n', '<leader>fm', require('telescope.builtin').marks, { desc = '[F]ind [M]arks' })
 
 vim.keymap.set('n', '<leader>fg', "<cmd>lua require'telescope'.extensions.live_grep_args.live_grep_args()<CR>", opts)
 vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[F]ind current [W]ord' })
