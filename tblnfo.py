@@ -1,26 +1,37 @@
 #!/usr/bin/env python
 import pandas as pd
-from sys import argv, stdin
+import polars as pl
+import sys
 import select
+import io
 from pathlib import Path
 from typing import List, TextIO
 import warnings
+import argparse
+from enum import Enum
+parser = argparse.ArgumentParser()
+parser.add_argument('infile', nargs='?')
+args = parser.parse_args()
 
-def read_data() -> pd.DataFrame:
+class ContentType(Enum):
+    FILE_NAME = 1
+    CSV = 2
+
+def read_data() -> pl.DataFrame:
     '''Function that dynamically picks data from
     stdin or argv depending on what is available. Stdin
     only supports csv content at the moment'''
-    if select.select([stdin, ], [], [], 0.0)[0]:
-        file_object = stdin
+    data: Path | io.StringIO = args.infile
+    if not data:
+        data = io.StringIO(sys.stdin.read())
     else:
-        file_name = argv[1]
-        file_object = Path(file_name)
-    df = read_table_file(file_object)
+        data = Path(data)
+    df = read_table_file(data)
 
     return df
 
 # File detection functions
-def read_table_file(f: Path | TextIO) -> pd.DataFrame:
+def read_table_file(f: io.StringIO | Path) -> pl.DataFrame:
     ''' Try various ways of autodetecting
     file type and other pieces of information
     required and parse the file into a
@@ -35,18 +46,17 @@ def read_table_file(f: Path | TextIO) -> pd.DataFrame:
                 df = pd.read_excel(f)
     else:
         df = read_csv_file(f)
-    if not isinstance(df, pd.DataFrame):
+    if not isinstance(df, pl.DataFrame):
         raise ValueError(
             "Passed file could not be matched as a csv or MS excel file"
         )
 
     return df
 
-def detect_csv_sep(f: Path | TextIO) -> str:
+def detect_csv_sep(f: Path | io.StringIO ) -> str:
     '''Initial support for autodetecting:
     - comma
     - semicolon
-    Defaults to ","
     '''
     sep = ','
     if isinstance(f, Path):
@@ -56,9 +66,8 @@ def detect_csv_sep(f: Path | TextIO) -> str:
     l1 = fp.readline()
     l2 = fp.readline()
     lines = [l1, l2]
-    csv_sep_detect_logic(lines)
-    if isinstance(f, Path):
-        fp.close()
+    sep = csv_sep_detect_logic(lines)
+    fp.seek(0)
 
     return sep
 
@@ -72,39 +81,43 @@ def csv_sep_detect_logic(lines: List) -> str:
 
     return sep
 
-def read_csv_file(f: Path | TextIO) -> pd.DataFrame:
+def read_csv_file(f: Path | io.StringIO) -> pl.DataFrame:
     print("Filetype is: csv\n")
     sep = detect_csv_sep(f)
-    df = pd.read_csv(
-        f,
-        sep = sep,
-    )
+
+    df = pl.read_csv(f, infer_schema_length=10000, separator=sep)
+    if isinstance(f, io.StringIO):
+        f.close()
     return df
 
 
 # Column type assignment & cleanup functions
-def assign_df_types(df: pd.DataFrame) -> None:
+def assign_df_types(df: pl.DataFrame) -> None:
     '''Changes types in place'''
-    for col in df.columns:
-        if df[col].dtype == 'object':
-            uq = df[col].dropna().unique()
+    print(df.schema)
+    for column, tpe in df.schema.items():
+        base_type = tpe.base_type()
+        print(tpe.base_type())
+        if base_type == pl.Utf8:
+            uq = pl.col(column).drop_nans().drop_nulls().unique()
             # Try to cast to date
             if any([x in str(uq[0]) for x in ['.', '-', '/']]):
                 try:
-                    df[col] = pd.to_datetime(df[col])
+                    # TODO: cast to date
+                    df.col(column)
                 except:
                     pass
-            if df[col].dtype != 'datetime64[ns]':
+            if base_type != pl.Datetime:
                 # TODO: think of what other casts may be useful
                 pass
 
-def string_column_cleanup(df: pd.DataFrame) -> None:
+def string_column_cleanup(df: pl.DataFrame) -> None:
     # TODO: Add generic cleanup here
     pass
 
 
 # Column analysis candidate finding functions
-def get_analysis_candidates(df: pd.DataFrame) -> dict[str, list]:
+def get_analysis_candidates(df: pl.DataFrame) -> dict[str, list]:
     col_candidates = dict(keys=df.columns)
     for col in df.columns:
         col_candidates[col] = get_col_analysis_candidates(df[col])
@@ -138,7 +151,7 @@ def _col_nan_percentage(s: pd.Series) -> float | None:
         return s.isna().tolist().count(True) / len(s)
 
 def column_level_overview_text(
-            df: pd.DataFrame,
+            df: pl.DataFrame,
             analysis_candidates: dict[str, list]
         ) -> None:
     for i, col in enumerate(df.columns):
@@ -169,5 +182,5 @@ def column_level_overview_text(
 if __name__ == '__main__':
     dfm = read_data()
     assign_df_types(dfm)
-    candidates = get_analysis_candidates(dfm)
-    column_level_overview_text(dfm, candidates)
+    # candidates = get_analysis_candidates(dfm)
+    # column_level_overview_text(dfm, candidates)
