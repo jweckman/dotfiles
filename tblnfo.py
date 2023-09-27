@@ -38,7 +38,7 @@ def read_table_file(f: io.StringIO | Path) -> pl.DataFrame:
             case ".csv":
                 df = read_csv_file(f)
             case ".xlsx":
-                print("Filetype is: MS excel\n")
+                print("File type is: MS excel\n")
                 df = pl.read_excel(f)
     else:
         df = read_csv_file(f)
@@ -78,15 +78,23 @@ def csv_sep_detect_logic(lines: list) -> str:
     return sep
 
 def read_csv_file(f: Path | io.StringIO) -> pl.DataFrame:
-    print("Filetype is: csv\n")
+    print("File type is: csv\n")
     sep = detect_csv_sep(f)
 
-    df = pl.read_csv(
-        f,
-        infer_schema_length = 10000,
-        separator = sep,
-        try_parse_dates = True
-    )
+    try:
+        df = pl.read_csv(
+            f,
+            infer_schema_length = 100000,
+            separator = sep,
+            try_parse_dates = True,
+        )
+    except:
+        # Bad date formats can seemingly break things instead of falling back to Utf8
+        df = pl.read_csv(
+            f,
+            infer_schema_length = 100000,
+            separator = sep,
+        )
     if isinstance(f, io.StringIO):
         f.close()
     return df
@@ -99,6 +107,8 @@ def assign_df_types(df: pl.DataFrame) -> None:
         base_type = tpe.base_type()
         if base_type == pl.Utf8:
             uq = df.get_column(column).drop_nans().drop_nulls().unique()
+            if len(uq) == 0:
+                continue
             # Try to cast to date
             first_str = str(uq.item(0))
             if any([x in first_str for x in ['.', '-']]):
