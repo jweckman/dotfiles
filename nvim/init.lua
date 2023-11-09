@@ -109,6 +109,10 @@ require('packer').startup(function(use)
   use('tpope/vim-surround')
   -- Programming languages
   use('edgedb/edgedb-vim')
+  -- SQL
+  use('tpope/vim-dadbod')
+  use('kristijanhusak/vim-dadbod-ui')
+  use('kristijanhusak/vim-dadbod-completion')
   -- Testing
   use('nvim-neotest/neotest-python')
   use('nvim-neotest/neotest-plenary')
