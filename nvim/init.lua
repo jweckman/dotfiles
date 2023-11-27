@@ -346,7 +346,9 @@ hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
 end)
 
 -- require("ibl").setup { indent = { highlight = highlight } }
-require("ibl").setup()
+require("ibl").setup {
+  scope = { enabled = false },
+}
 
 -- Gitsigns
 -- See `:help gitsigns.txt`
@@ -562,7 +564,7 @@ require('mason').setup()
 local servers = {
   'rust_analyzer',
   'bashls',
-  'jedi_language_server',
+  'pylsp',
   'tsserver',
   'lua_ls',
   'texlab',
@@ -623,6 +625,33 @@ require('lspconfig').lua_ls.setup {
       telemetry = { enable = false },
     },
   },
+}
+
+require'lspconfig'.pylsp.setup{
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          enabled = true,
+          ignore = {
+            'W391',
+            'E501',
+            'E251',
+          },
+          maxLineLength = 100
+        },
+        autopep8 = {
+          enabled = false,
+        },
+        flake8 = {
+          enabled = false,
+          ignore = {
+            'E501',
+          }
+        },
+      }
+    }
+  }
 }
 
 -- nvim-cmp setup
