@@ -637,6 +637,9 @@ require'lspconfig'.pylsp.setup{
             'W391',
             'E501',
             'E251',
+            'E125',
+            'E121',
+            'E302',
           },
           maxLineLength = 100
         },
