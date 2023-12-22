@@ -98,3 +98,5 @@ export BROWSER="firefox"
 # For QT Themes
 export QT_QPA_PLATFORMTHEME=qt5ct
 
+eval "$(zoxide init zsh)"
+
