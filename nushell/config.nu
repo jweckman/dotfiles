@@ -768,3 +768,7 @@ $env.config = {
 
 # Starship
 use ~/.cache/starship/init.nu
+
+# ALIASES
+
+alias z = cd
