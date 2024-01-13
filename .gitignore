@@ -1,3 +1,6 @@
 nvim/autoload/
 nvim/sessions/
 nvim/plugin/
+nushell/history.txt
+nushell/nupm
+nushell/plugin.nu

@@ -40,6 +40,12 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
+  -- Nushell
+  use {
+    'nushell/tree-sitter-nu',
+    requires = { "nvim-treesitter/nvim-treesitter"}
+  }
+
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'
@@ -441,6 +447,7 @@ require('nvim-treesitter.configs').setup {
     'html',
     'javascript',
     'vue',
+    'nu',
   },
 
   highlight = { enable = true },
