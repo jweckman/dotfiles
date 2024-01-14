@@ -75,4 +75,7 @@ return {
       "antoinemadec/FixCursorHold.nvim"
     }
   },
+
+  -- Navigation
+  'https://github.com/ggandor/leap.nvim'
 }

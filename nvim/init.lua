@@ -699,3 +699,6 @@ null_ls.setup({
     null_ls.builtins.diagnostics.mypy,
   },
 })
+
+-- Leap
+require('leap').create_default_mappings()
