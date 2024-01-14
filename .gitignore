@@ -1,6 +1,7 @@
 nvim/autoload/
 nvim/sessions/
 nvim/plugin/
+nvim/lazy-lock.json
 nushell/history.txt
 nushell/nupm
 nushell/plugin.nu
