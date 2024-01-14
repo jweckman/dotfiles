@@ -14,6 +14,10 @@ return {
   },
   -- Much prefer to use fzy native due to fzf being too fuzzy
   'nvim-telescope/telescope-fzy-native.nvim',
+  -- Other telescope addons
+  'nvim-telescope/telescope-live-grep-args.nvim',
+  'nvim-telescope/telescope-file-browser.nvim',
+  'nvim-telescope/telescope-dap.nvim',
 
   -- Treesitter playground
   'nvim-treesitter/playground',
