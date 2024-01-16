@@ -775,5 +775,59 @@ alias z = cd
 alias vim = nvim
 
 def lst [] {
-  ls | sort-by modified
+    ls | sort-by modified
+}
+
+def lstr [] {
+    ls | sort-by modified | reverse
+}
+
+def lsf [] {
+    ls | where type == file
+}
+
+def lsft [] {
+    ls | where type == file | sort-by modified
+}
+
+def lsftr [] {
+    ls | where type == file | sort-by modified | reverse
+}
+
+def lsd [] {
+    ls | where type == dir
+}
+
+def lsdt [] {
+    ls | where type == dir | sort-by modified
+}
+
+def lsdtr [] {
+    ls | where type == dir | sort-by modified | reverse
+}
+
+def new [index?] {
+    if ($index == null) {
+        ls -f | where type == file | sort-by modified | last | get name
+    } else {
+        # ls -f | where type == file | sort-by modified | collect { |x| $x.($index) }
+        ls -f | where type == file | sort-by modified | get $index | get name
+    }
+}
+
+def old [index?] {
+    if ($index == null) {
+        ls -f | where type == file | sort-by modified | first | get name
+    } else {
+        # ls -f | where type == file | sort-by modified | collect { |x| $x.($index) }
+        ls -f | where type == file | sort-by modified | reverse | get $index | get name
+    }
+}
+
+def cbc [] {
+    $in | clipboard copy | null
+}
+
+def cbp [] {
+    $in | clipboard paste
 }
