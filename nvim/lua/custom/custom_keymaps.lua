@@ -6,6 +6,10 @@ vim.keymap.set('n', '<C-L>', '<cmd>bprev<CR>', opts)
 vim.keymap.set('n', '<C-H>', '<cmd>bnext<CR>', opts)
 vim.keymap.set('n', '<leader><CR>', '<cmd>tabnew | term<CR>', opts)
 vim.keymap.set('n', '<leader>cfd', '<cmd>cd %:p:h<CR><cmd>pwd<CR>', opts)
+
+local current_file = vim.fn.expand('%:p')
+vim.keymap.set('n', '<leader>cfc', "<cmd>lua vim.fn.setreg('+', '" .. current_file .. "')<CR>", opts)
+
 vim.keymap.set('n', '<C-d>', '<C-d>zz', opts)
 vim.keymap.set('n', '<C-u>', '<C-u>zz', opts)
 vim.keymap.set('n', '<leader><BS>', '<cmd>bp|bd #<CR>', opts)
