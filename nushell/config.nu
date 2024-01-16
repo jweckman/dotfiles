@@ -773,3 +773,7 @@ use ~/.cache/starship/init.nu
 
 alias z = cd
 alias vim = nvim
+
+def lst [] {
+  ls | sort-by modified
+}
