@@ -683,6 +683,7 @@ cmp.setup {
 -- vim: ts=2 sts=2 sw=2 et
 
 -- USERCONFIG
+require('custom.custom_options')
 require('custom.custom_keymaps')
 require('custom.custom_lsp_config')
 require('custom.custom_dap')

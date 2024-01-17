@@ -9,7 +9,6 @@ vim.o.expandtab = true
 vim.o.smartindent = true
 vim.o.swapfile = false
 vim.o.updatetime = 300
-vim.o.shortmess:append("c")
 vim.o.lazyredraw = true
 vim.o.foldnestmax = 10
 vim.o.foldenable = false
