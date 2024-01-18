@@ -122,3 +122,12 @@ $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/joakim/.config/n
 # Starship
 mkdir ~/.cache/starship
 starship init nu | save -f ~/.cache/starship/init.nu
+
+# Ocaml opam setup
+if ( which opam | is-empty ) == false {
+    $env.OPAM_SWITCH_PREFIX = $"($nu.home-path)/.opam/default"
+    $env.CAML_LD_LIBRARY_PATH = $"($nu.home-path)/.opam/default/lib/stublibs:/usr/lib/ocaml/stublibs:/usr/lib/ocaml"
+    $env.OCAML_TOPLEVEL_PATH = $"($nu.home-path)/.opam/default/lib/toplevel"
+    $env.MANPATH = $"($nu.home-path):/.opam/default/man"
+    $env.PATH = ($env.PATH | split row (char esep) | prepend "($nu.home-path)/.opam/default/bin")
+}

@@ -472,6 +472,14 @@ $env.config = {
             mode: [emacs, vi_normal, vi_insert]
             event: {edit: movetolinestart}
         }
+        # USERCONFIG: Neovim underscore to start of line
+        {
+            name: move_to_line_start
+            modifier: none
+            keycode: char__
+            mode: [vi_normal]
+            event: {edit: movetolinestart}
+        }
         {
             name: move_to_line_start
             modifier: control
