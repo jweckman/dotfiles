@@ -814,6 +814,10 @@ def lsdtr [] {
     ls | where type == dir | sort-by modified | reverse
 }
 
+def lsfty [] {
+    ls | where type == file | insert ext { |x| $x.name | split row '.' | last } | sort-by ext
+}
+
 def new [index?] {
     if ($index == null) {
         ls -f | where type == file | sort-by modified | last | get name
@@ -839,3 +843,4 @@ def cbc [] {
 def cbp [] {
     $in | clipboard paste
 }
+
