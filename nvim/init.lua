@@ -607,7 +607,6 @@ local servers = {
   dockerls = {},
   vuels = {},
   crystalline = {},
-  mypy = {},
 }
 
 -- Setup neovim lua configuration
