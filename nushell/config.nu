@@ -818,7 +818,7 @@ def lsfty [] {
     ls | where type == file | insert ext { |x| $x.name | split row '.' | last } | sort-by ext
 }
 
-def new [index?] {
+def new [index?: int] {
     if ($index == null) {
         ls -f | where type == file | sort-by modified | last | get name
     } else {
@@ -826,8 +826,17 @@ def new [index?] {
         ls -f | where type == file | sort-by modified | get $index | get name
     }
 }
+def cpn [ from: string, to: string ] {
+    # Copies newest file in arg0 to arg1
+    let new_file =  {
+        let from_dir = $from | path parse | get parent
+        cd $from_dir
+        new
+    }
+    cp $from $to
+}
 
-def old [index?] {
+def old [index?: int] {
     if ($index == null) {
         ls -f | where type == file | sort-by modified | first | get name
     } else {

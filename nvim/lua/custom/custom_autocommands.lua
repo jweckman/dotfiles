@@ -47,3 +47,7 @@ vim.api.nvim_create_autocmd({ "FileType"}, {
   pattern = {"html"},
   command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
 })
+vim.api.nvim_create_autocmd({ "FileType"}, {
+  pattern = {"esdl"},
+  command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
+})
