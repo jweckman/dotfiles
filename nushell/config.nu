@@ -853,3 +853,5 @@ def cbp [] {
     $in | clipboard paste
 }
 
+# Context dependent additional configs loaded here
+use 'custom.nu' *
