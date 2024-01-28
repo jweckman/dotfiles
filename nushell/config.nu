@@ -854,4 +854,5 @@ def cbp [] {
 }
 
 # Context dependent additional configs loaded here
-use 'custom.nu' *
+use custom.nu *
+
