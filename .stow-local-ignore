@@ -1,0 +1,6 @@
+.mypy_cache
+.git
+LICENCE
+README.md
+autohotkey
+qmk
