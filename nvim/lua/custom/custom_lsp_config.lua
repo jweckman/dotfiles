@@ -5,6 +5,7 @@ require'lspconfig'.pylsp.setup{
         pycodestyle = {
           enabled = true,
           ignore = {
+            'W503',
             'W391',
             'E501',
             'E251',
