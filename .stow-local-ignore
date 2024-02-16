@@ -1,6 +1,6 @@
 .mypy_cache
 .git
-LICENCE
+LICENSE
 README.md
 autohotkey
 qmk
