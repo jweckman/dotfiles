@@ -853,6 +853,22 @@ def cbp [] {
     $in | clipboard paste
 }
 
+def --env zs [partial_path: string] {
+    # cd into partial directories
+    let dirs = ls | where type == dir | where name =~ $partial_path | get name
+    let dir_length = $dirs | length
+    let dir = (if ($dir_length == 1) {
+        $dirs | first
+    } else {
+        false
+    })
+    if ($dir != false) {
+        cd $dir
+    } else {
+        echo $"Too many matching directories: ($dirs), did not cd"
+    }
+}
+
 # Context dependent additional configs loaded here
 use custom.nu *
 
