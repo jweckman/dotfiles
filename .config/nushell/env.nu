@@ -114,7 +114,10 @@ $env.NU_PLUGIN_DIRS = [
 # nupm install --force --path .
 
 # Add nupm binaries to PATH
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/home/joakim/.config/nushell/nupm/plugins/bin')
+$env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.config/nushell/nupm/plugins/bin")
+
+# Add .local/bin to PATH
+$env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.local/bin")
 
 # Zoxide BUGGY
 # zoxide init nushell | save -f ~/.zoxide.nu
