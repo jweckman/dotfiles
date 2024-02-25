@@ -119,6 +119,9 @@ $env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.config/n
 # Add .local/bin to PATH
 $env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.local/bin")
 
+# Add custom scripts to PATH
+$env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/scripts")
+
 # Zoxide BUGGY
 # zoxide init nushell | save -f ~/.zoxide.nu
 
