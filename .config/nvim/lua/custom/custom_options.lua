@@ -1,5 +1,6 @@
 local opts = {silent=true}
 
+vim.o.shell = '/bin/bash'
 vim.o.nu = true
 vim.o.rnu = true
 vim.o.tabstop = 4
