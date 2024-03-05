@@ -863,8 +863,10 @@ def --env zs [partial_path: string] {
     })
     if ($dir != false) {
         cd $dir
-    } else {
+    } else if ($dir_length > 1 ) {
         echo $"Too many matching directories: ($dirs), did not cd"
+    } else if ($dir_length == 0) {
+        echo $"No matching directories, did not cd"
     }
 }
 
