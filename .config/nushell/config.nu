@@ -828,12 +828,11 @@ def new [index?: int] {
 }
 def cpn [ from: string, to: string ] {
     # Copies newest file in arg0 to arg1
-    let new_file =  {
-        let from_dir = $from | path parse | get parent
-        cd $from_dir
+    let new_file = do {
+        cd $from
         new
     }
-    cp $from $to
+    cp $new_file $to
 }
 
 def old [index?: int] {
@@ -864,8 +863,10 @@ def --env zs [partial_path: string] {
     })
     if ($dir != false) {
         cd $dir
-    } else {
+    } else if ($dir_length > 1 ) {
         echo $"Too many matching directories: ($dirs), did not cd"
+    } else if ($dir_length == 0) {
+        echo $"No matching directories, did not cd"
     }
 }
 
