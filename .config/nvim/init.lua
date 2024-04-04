@@ -437,6 +437,7 @@ vim.defer_fn(function()
       'vue',
       'nu',
       'ocaml',
+      'gleam',
     },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -608,6 +609,9 @@ local servers = {
   vuels = {},
   crystalline = {},
 }
+
+-- USERCONFIG: Non-mason LSP setup
+require'lspconfig'.gleam.setup{}
 
 -- Setup neovim lua configuration
 require('neodev').setup()
