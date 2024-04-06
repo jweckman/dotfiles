@@ -430,13 +430,11 @@ vim.defer_fn(function()
       'vimdoc',
       'vim',
       'bash',
-      -- USERCONFIG: Personal languages
+      -- USERCONFIG: Personal languages. MINIMAL
       'json',
       'yaml',
       'html',
-      'vue',
       'nu',
-      'ocaml',
       'gleam',
     },
 
@@ -587,31 +585,10 @@ require('mason-lspconfig').setup()
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
-  rust_analyzer = {},
-  tsserver = {},
-  html = { filetypes = { 'html', 'twig', 'hbs'} },
-
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-      -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-      -- diagnostics = { disable = { 'missing-fields' } },
-    },
-  },
-  -- USERCONFIG: Custom servers
-  bashls = {},
-  pylsp = {},
-  texlab = {},
-  jsonls = {},
-  lemminx = {},
-  dockerls = {},
-  vuels = {},
-  crystalline = {},
+  -- USERCONFIG: Custom servers MINIMAL
 }
 
--- USERCONFIG: Non-mason LSP setup
-require'lspconfig'.gleam.setup{}
+-- USERCONFIG: Non-mason LSP setup MINIMAL
 
 -- Setup neovim lua configuration
 require('neodev').setup()
@@ -693,24 +670,13 @@ cmp.setup {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
--- USERCONFIG
+-- USERCONFIG MINIMAL
 require('custom.custom_options')
 require('custom.custom_keymaps')
-require('custom.custom_lsp_config')
-require('custom.custom_dap')
 require('custom.custom_user_commands')
 require('custom.custom_autocommands')
 
--- NULL LS / NONE LS setup
-local null_ls = require("null-ls")
-null_ls.setup({
-  sources = {
-    null_ls.builtins.formatting.stylua,
-    -- null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.completion.spell,
-    null_ls.builtins.diagnostics.mypy,
-  },
-})
+-- NULL LS / NONE LS setup MINIMAL -- disabled
 
 -- Leap
 require('leap').create_default_mappings()
