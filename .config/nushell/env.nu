@@ -122,6 +122,9 @@ $env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.local/bi
 # Add custom scripts to PATH
 $env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/scripts")
 
+# Add dart pub-cache to PATH
+$env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.pub-cache/bin")
+
 # Zoxide BUGGY
 # zoxide init nushell | save -f ~/.zoxide.nu
 

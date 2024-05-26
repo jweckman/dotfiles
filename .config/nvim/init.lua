@@ -438,6 +438,7 @@ vim.defer_fn(function()
       'nu',
       'ocaml',
       'gleam',
+      'dart',
     },
 
     -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
@@ -612,6 +613,7 @@ local servers = {
 
 -- USERCONFIG: Non-mason LSP setup
 require'lspconfig'.gleam.setup{}
+require'lspconfig'.dartls.setup {}
 
 -- Setup neovim lua configuration
 require('neodev').setup()
