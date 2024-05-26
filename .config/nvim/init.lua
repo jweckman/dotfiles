@@ -714,5 +714,3 @@ null_ls.setup({
   },
 })
 
--- Leap
-require('leap').create_default_mappings()
