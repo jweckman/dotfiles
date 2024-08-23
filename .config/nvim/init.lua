@@ -614,6 +614,7 @@ local servers = {
 -- USERCONFIG: Non-mason LSP setup
 require'lspconfig'.gleam.setup{}
 require'lspconfig'.dartls.setup {}
+require'lspconfig'.nushell.setup{}
 
 -- Setup neovim lua configuration
 require('neodev').setup()
