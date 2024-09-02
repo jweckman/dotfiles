@@ -897,6 +897,11 @@ def --env zs [partial_path: string] {
     }
 }
 
+def kdc [] {
+    # Kill Docker Containers
+    docker ps -q | lines | each {docker stop $in}
+}
+
 # Context dependent additional configs loaded here
 use custom.nu *
 
