@@ -542,7 +542,7 @@ local on_attach = function(_, bufnr)
   nmap('<leader>lf', vim.lsp.buf.format, 'Lsp based format')
 
   -- Lesser used LSP functionality
-  nmap('lgD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  nmap('<leader>lgd', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   nmap('<leader>lwa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   nmap('<leader>lwr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
   nmap('<leader>lwl', function()
