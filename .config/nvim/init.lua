@@ -483,6 +483,7 @@ require("lazy").setup({
 				-- Disable "format_on_save lsp_fallback" for languages that don't
 				-- have a well standardized coding style. You can add additional
 				-- languages here or re-enable it for the disabled ones.
+				-- USERCONFIG: add more languages that should have autoformat disabled
 				local disable_filetypes = { c = true, cpp = true, xml = true, html = true, python = true }
 				local lsp_format_opt
 				if disable_filetypes[vim.bo[bufnr].filetype] then
