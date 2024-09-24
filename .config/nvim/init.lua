@@ -483,7 +483,7 @@ require("lazy").setup({
 				-- Disable "format_on_save lsp_fallback" for languages that don't
 				-- have a well standardized coding style. You can add additional
 				-- languages here or re-enable it for the disabled ones.
-				local disable_filetypes = { c = true, cpp = true }
+				local disable_filetypes = { c = true, cpp = true, xml = true, html = true, python = true }
 				local lsp_format_opt
 				if disable_filetypes[vim.bo[bufnr].filetype] then
 					lsp_format_opt = "never"
@@ -671,6 +671,9 @@ require("lazy").setup({
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
 		main = "nvim-treesitter.configs", -- Sets main module to use for opts
+		dependencies = {
+			{ "nushell/tree-sitter-nu", build = ":TSUpdate nu" },
+		},
 		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 		opts = {
 			ensure_installed = {
