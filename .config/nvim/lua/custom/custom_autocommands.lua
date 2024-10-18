@@ -51,6 +51,10 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	pattern = { "esdl" },
 	command = "setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2",
 })
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	pattern = { "make" },
+	command = "setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=0",
+})
 
 -- Perhaps temporary fix for dart commentstrings. Can probably be removed in Neovim 0.11
 vim.api.nvim_create_autocmd("FileType", {
