@@ -509,11 +509,15 @@ require("lazy").setup({
 
 	{ -- Autocompletion
 		"hrsh7th/nvim-cmp",
-		event = "InsertEnter",
+		-- TODO: Figure out how to make snippets work with event turned on
+		-- event = "InsertEnter",
 		dependencies = {
 			-- Snippet Engine & its associated nvim-cmp source
 			{
 				"L3MON4D3/LuaSnip",
+				config = function()
+					require("luasnip.loaders.from_lua").load({ paths = { "~/.config/nvim/lua/snippets" } })
+				end,
 				build = (function()
 					-- Build Step is needed for regex support in snippets.
 					-- This step is not supported in many windows environments.
