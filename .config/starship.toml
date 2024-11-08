@@ -1,6 +1,7 @@
 format = """
 $git_branch\
 $git_status\
+$hostname\
 [](fg:#999999)\
 $directory\
 [](fg:#999999)\
@@ -20,7 +21,13 @@ show_always = true
 style_user = "bg:#9A348E"
 style_root = "bg:#9A348E"
 format = '[$user ]($style)'
- 
+
+[hostname]
+ssh_only = true
+format = '[$ssh_symbol](bold blue) [$hostname](bold red) '
+disabled = false
+ssh_symbol = ' 󰖟'
+
 [directory]
 style = "fg:#367ab7"
 format = "[ $path ]($style)"
