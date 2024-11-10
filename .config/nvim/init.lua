@@ -768,7 +768,8 @@ require("lazy").setup({
 
 -- USERCONFIG: Load files that require Lazy to be initialized first
 require("custom.custom_lsp_config")
-require("custom.custom_dap")
+-- require("custom.custom_dap") -- Custom sample python docker connection code that may not work
+require("custom.custom_dap_dart")
 
 -- USERCONFIG: Load colorscheme (theme)
 -- vim.cmd.colorscheme("kanagawa-paper")
