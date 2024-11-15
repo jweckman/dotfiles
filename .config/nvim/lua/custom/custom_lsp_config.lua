@@ -24,6 +24,7 @@ require("lspconfig").pylsp.setup({
 						"E125",
 						"E121",
 						"E302",
+						"E741",
 					},
 					maxLineLength = 100,
 				},
