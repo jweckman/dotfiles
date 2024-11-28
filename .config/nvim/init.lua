@@ -168,6 +168,9 @@ require("lazy").setup({
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
 			-- USERCONFIG: Fairly custom keybinds for telescope
+			vim.keymap.set("n", "<leader><leader>", require("telescope.builtin").buffers, { desc = "Search Buffers" })
+			vim.keymap.set("n", "<leader>sm", require("telescope.builtin").man_pages, { desc = "Search Man Pages" })
+			vim.keymap.set("n", "<leader>si", require("telescope.builtin").search_history, { desc = "Search History" })
 			vim.keymap.set(
 				"n",
 				"<leader>ss",
@@ -214,7 +217,7 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>gd", require("telescope.builtin").git_status, { desc = "[G]it [D]iff" })
 			vim.keymap.set(
 				"n",
-				"<leader>fo",
+				"<leader>so",
 				require("telescope.builtin").oldfiles,
 				{ desc = "[?] Find recently opened files" }
 			)
