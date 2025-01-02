@@ -17,7 +17,7 @@ class MainWindow(QWidget):
         self.label = QLabel(self.stdin_to_string())
         self.label.setFont(QFont("Arial", 16))
         self.layout.addWidget(self.label)
-        self.setWindowTitle("JW personal notifications")
+        self.setWindowTitle("jw_personal_notifications")
         self.setLayout(self.layout)
         self.center()
 
