@@ -228,7 +228,7 @@ default_floating_border none
 
 # Window rules
 for_window {
-    [title="^JW.personal.notifications$"] floating enable
+    [title="jw_personal_notifications"] floating enable
 }
 
 include /etc/sway/config.d/*
