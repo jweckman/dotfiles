@@ -125,6 +125,15 @@ $env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/scripts")
 # Add dart pub-cache to PATH
 $env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.pub-cache/bin")
 
+# Add cargo to PATH
+$env.PATH = ($env.PATH | split row (char esep) | prepend $"($env.HOME)/.cargo/bin")
+
+let sway_active = ps | get name | 'sway' in $in
+if ($sway_active == true) {
+    $env.XDG_CURRENT_DESKTOP = 'sway'
+    $env.MOZ_ENABLE_WAYLAND = 1
+}
+
 # Zoxide BUGGY
 # zoxide init nushell | save -f ~/.zoxide.nu
 
