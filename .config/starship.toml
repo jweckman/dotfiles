@@ -8,6 +8,7 @@ $directory\
 $time\
 $character\
 """
+command_timeout = 900
  
 # Disable the blank line at the start of the prompt
 add_newline = false
