@@ -803,7 +803,7 @@ use ~/.cache/starship/init.nu
 
 # ALIASES
 
-alias z = cd
+alias f = cd
 alias vim = nvim
 
 def lst [] {
@@ -876,7 +876,7 @@ def cbp [] {
     $in | clipboard paste
 }
 
-def --env zs [partial_path: string] {
+def --env fs [partial_path: string] {
     # cd into partial directories
     let dirs = ls | where type == dir | where name =~ $partial_path | get name
     let dir_length = $dirs | length
