@@ -56,3 +56,5 @@ vim.opt.completeopt = "menuone,noselect"
 vim.opt.termguicolors = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+-- Diagnostic keymaps
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
