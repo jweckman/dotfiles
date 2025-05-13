@@ -803,3 +803,20 @@ require("custom.custom_dap_dart")
 -- USERCONFIG: Load colorscheme (theme)
 -- vim.cmd.colorscheme("kanagawa-paper")
 vim.cmd.colorscheme("kanagawa")
+
+-- Toggle LSP diagnostics (linting) globally
+local diagnostics_enabled = true
+
+function ToggleLspLinting()
+	diagnostics_enabled = not diagnostics_enabled
+	if diagnostics_enabled then
+		vim.diagnostic.enable()
+		print("LSP linting enabled")
+	else
+		vim.diagnostic.enable(false)
+		print("LSP linting disabled")
+	end
+end
+
+-- Map to a keybinding, like <leader>lt
+vim.keymap.set("n", "<leader>lt", ToggleLspLinting, { noremap = true, silent = true, desc = "Toggle LSP linting" })
