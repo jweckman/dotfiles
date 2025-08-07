@@ -805,6 +805,7 @@ use ~/.cache/starship/init.nu
 
 alias f = cd
 alias vim = nvim
+alias tree = tree -I '__pycache__'
 
 def lst [] {
     ls | sort-by modified
