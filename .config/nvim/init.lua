@@ -726,6 +726,8 @@ require("lazy").setup({
 				"vue",
 				"nu",
 				"dart",
+				"odin",
+				"zig",
 			},
 			-- Autoinstall languages that are not installed
 			auto_install = true,
