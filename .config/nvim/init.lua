@@ -480,8 +480,29 @@ require("lazy").setup({
 			}
 
 			-- USERCONFIG: Non-mason LSP setup
-			require("lspconfig").dartls.setup({})
-			require("lspconfig").nushell.setup({})
+			vim.lsp.enable("dartls")
+
+			vim.lsp.enable("nushell")
+			vim.filetype.add({
+				pattern = {
+					[".*"] = function(path, bufnr)
+						local content = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ""
+						if vim.regex([[^#!.*\<nu\>]]):match_str(content) then
+							return "nu"
+						end
+					end,
+				},
+			})
+
+			vim.lsp.config("zls", {
+				settings = {
+					zls = {
+						semantic_tokens = "partial",
+						zig_exe_path = "/usr/bin/anyzig",
+					},
+				},
+			})
+			vim.lsp.enable("zls")
 
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
