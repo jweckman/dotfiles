@@ -163,7 +163,6 @@ keybinds clear-defaults=true {
         bind "Alt l" { MoveFocusOrTab "right"; }
         bind "Alt m" { NewPane; }
         bind "Alt n" { NewTab; SwitchToMode "normal"; }
-        bind "Ctrl q" { Quit; }
     }
     shared_except "locked" "session" {
         bind "Ctrl o" { SwitchToMode "session"; }
