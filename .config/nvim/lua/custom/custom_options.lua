@@ -1,7 +1,3 @@
--- Leader
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
-
 -- General
 vim.opt.shell = "/bin/bash"
 vim.opt.number = true
@@ -33,9 +29,13 @@ vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 
 -- Sync clipboard between OS and Neovim.
+--  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.opt.clipboard = "unnamedplus"
+vim.schedule(function()
+	vim.o.clipboard = "unnamedplus"
+end)
+
 -- Enable break indent
 vim.opt.breakindent = true
 -- Save undo history
@@ -56,5 +56,31 @@ vim.opt.completeopt = "menuone,noselect"
 vim.opt.termguicolors = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
--- Diagnostic keymaps
+
+vim.diagnostic.config({
+	update_in_insert = false,
+	severity_sort = true,
+	float = { border = "rounded", source = "if_many" },
+	underline = { severity = { min = vim.diagnostic.severity.WARN } },
+
+	-- Can switch between these as you prefer
+	virtual_text = true, -- Text shows up at the end of the line
+	virtual_lines = false, -- Text shows up underneath the line, with virtual lines
+
+	-- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
+	jump = { float = true },
+})
+
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+
+-- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
+-- instead raise a dialog asking if you wish to save the current file(s)
+-- See `:help 'confirm'`
+vim.o.confirm = true
+
+-- Don't show the mode, since it's already in the status line
+vim.o.showmode = false
+
+-- Clear highlights on search when pressing <Esc> in normal mode
+--  See `:help hlsearch`
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
