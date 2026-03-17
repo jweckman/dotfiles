@@ -530,6 +530,7 @@ require("lazy").setup({
 				lemminx = {},
 				dockerls = {},
 				vuels = {},
+				gopls = {},
 			}
 
 			-- Ensure the servers and tools above are installed
