@@ -545,6 +545,15 @@ require("lazy").setup({
 				dockerls = {},
 				vuels = {},
 				gopls = {},
+
+				-- USERCONFIG: Python Native LSP Setup
+				zuban = {},
+				ruff = {
+					on_attach = function(client)
+						-- Disable Ruff's hover provider so it doesn't fight Zuban
+						client.server_capabilities.hoverProvider = false
+					end,
+				},
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -629,6 +638,7 @@ require("lazy").setup({
 			end,
 			formatters_by_ft = {
 				lua = { "stylua" },
+				python = { "ruff_format", "ruff_fix" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
