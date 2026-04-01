@@ -807,6 +807,21 @@ alias f = cd
 alias vim = nvim
 alias tree = tree -I '__pycache__'
 
+# Shorthand that passes each item to specified command string via command argument
+def e [cmd: string] {
+    $in | each { |it| 
+        do -i { nu -c $"($cmd) ($it | to nuon)" } 
+    }
+}
+
+# Shorthand that passes each item to specified command string via pipe
+def ep [...cmd: string] {
+    let cmd_str = ($cmd | str join " ")
+    $in | each { |it| 
+        do -i { nu -c $"($it | to nuon) | ($cmd_str)" } 
+    }
+}
+
 def lst [] {
     ls | sort-by modified
 }
