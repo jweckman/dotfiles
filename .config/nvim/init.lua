@@ -584,16 +584,6 @@ require("lazy").setup({
 				},
 			})
 
-			vim.lsp.config("zls", {
-				settings = {
-					zls = {
-						semantic_tokens = "partial",
-						zig_exe_path = "/usr/bin/anyzig",
-					},
-				},
-			})
-			vim.lsp.enable("zls")
-
 			for name, server in pairs(servers) do
 				vim.lsp.config(name, server)
 				vim.lsp.enable(name)
