@@ -149,3 +149,6 @@ if ( which opam | is-empty ) == false {
     $env.MANPATH = $"($nu.home-path):/.opam/default/man"
     $env.PATH = ($env.PATH | split row (char esep) | prepend "($nu.home-path)/.opam/default/bin")
 }
+
+# Lang
+$env.LANG = "en_GB.UTF-8"
