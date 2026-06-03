@@ -152,3 +152,9 @@ if ( which opam | is-empty ) == false {
 
 # Lang
 $env.LANG = "en_GB.UTF-8"
+
+# ~/.config/nushell/env.nu
+const secrets_path = "~/.config/environment.d/secrets.nu"
+if ($secrets_path | path exists) {
+    source $secrets_path
+}
