@@ -1,0 +1,9 @@
+default-timeout=2500
+width=400
+height=120
+border-size=2
+border-color=#ffffff
+background-color=#1e1e1e
+text-color=#ffffff
+positions=top-right
+font=monospace 11
