@@ -208,7 +208,9 @@ local mainMod = "SUPER"
 hl.bind(mainMod .. " + v", hl.dsp.exec_cmd("wf-recorder -f $(xdg-user-dir VIDEOS)/$(date +'%H:%M:%S_%d-%m-%Y.mp4')"))
 hl.bind(mainMod .. " + SHIFT + v", hl.dsp.exec_cmd("killall -s SIGINT wf-recorder"))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("~/scripts/notification_dash.sh | python ~/scripts/jwqtnotify.py"))
-hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("flameshot gui"))
+local screenShotCmd =
+	[[grim -g "$(slurp)" - | satty --filename - --output-filename "{XDG_PICTURES_DIR}/screenshot-%+.png" --early-exit --actions-on-enter save-to-clipboard]]
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd(screenShotCmd))
 
 -- System / launcher
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("swaylock"))
