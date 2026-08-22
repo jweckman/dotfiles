@@ -8,3 +8,6 @@ background-color=#1e1e1e
 text-color=#ffffff
 border-radius=10
 font=monospace 11
+
+[body~="compositor from Fcitx"]
+invisible=1
