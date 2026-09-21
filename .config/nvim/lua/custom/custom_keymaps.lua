@@ -32,6 +32,53 @@ vim.keymap.set("n", "<leader><BS>", "<cmd>bp|bd #<CR>", opts)
 vim.keymap.set("n", "<leader>cd", "<cmd>lua require'custom_pickers'.common_paths()<CR>", opts)
 
 -- DAP keybindings
+
+-- This crazy function is just to avoid seeing ECONNRESET every time dap is closed. Can probably be refactored in the future.
+local function dap_quit()
+	local dap, dapui = require("dap"), require("dapui")
+	if not dap.session() then
+		dapui.toggle() -- pure toggle when nothing is running
+		return
+	end
+
+	local original_notify = vim.notify
+	local original_err = vim.api.nvim_err_writeln
+
+	local function swallow(msg)
+		if type(msg) ~= "string" then
+			return false
+		end
+		local m = msg:lower()
+		return m:match("econnreset") or m:match("epipe") or m:match("connection reset")
+	end
+
+	vim.notify = function(msg, level, opts)
+		if swallow(msg) then
+			return
+		end
+		return original_notify(msg, level, opts)
+	end
+
+	vim.api.nvim_err_writeln = function(msg)
+		if swallow(msg) then
+			return
+		end
+		return original_err(msg)
+	end
+
+	pcall(dap.terminate)
+	-- No dapui.toggle() here — the before.event_terminated listener
+	-- already closed the UI. Tapping this keybind again (no session)
+	-- falls into the top branch and re-opens it.
+
+	vim.defer_fn(function()
+		vim.notify = original_notify
+		vim.api.nvim_err_writeln = original_err
+	end, 250)
+end
+
+vim.keymap.set("n", "<leader>dq", dap_quit, { desc = "DAP: terminate & toggle UI" })
+
 vim.keymap.set("n", "<leader>da", "<cmd>lua DAPATTACH.attach_python_debugger()<CR>", opts)
 vim.keymap.set("n", "<leader>dc", "<cmd>lua require'dap'.continue()<CR>", opts)
 vim.keymap.set("n", "<leader>do", "<cmd>lua require'dap'.step_over()<CR>", opts)
